@@ -290,3 +290,173 @@
     </div>
 
 </div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const container = document.getElementById('ticket-container');
+    const addButton = document.getElementById('add-ticket');
+    const imageInput = document.getElementById('gambar');
+    const previewImage = document.getElementById('preview-image');
+
+    let ticketIndex = 0;
+
+    // Preview gambar
+    imageInput.addEventListener('change', function (e) {
+
+        const file = e.target.files[0];
+
+        if (!file) {
+            previewImage.classList.add('hidden');
+            return;
+        }
+
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.classList.remove('hidden');
+
+    });
+
+    // Render ticket card
+    function renderTicket() {
+
+        const card = document.createElement('div');
+
+        card.className = 'card bg-base-200 border';
+
+        card.innerHTML = `
+            <div class="card-body">
+
+                <div class="flex justify-between items-center">
+
+                    <h4 class="font-semibold">
+                        Tiket #${ticketIndex + 1}
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn btn-error btn-sm remove-ticket">
+
+                        Hapus
+
+                    </button>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <div class="space-y-2">
+
+                        <label class="block">
+
+                            <span class="text-sm font-medium">
+
+                                Tipe Tiket
+
+                            </span>
+
+                            <span class="text-error">*</span>
+
+                        </label>
+
+                        <select
+                            name="tikets[${ticketIndex}][tipe]"
+                            class="select select-bordered w-full">
+
+                            <option value="reguler">
+
+                                Reguler
+
+                            </option>
+
+                            <option value="premium">
+
+                                Premium
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="space-y-2">
+
+                        <label class="block">
+
+                            <span class="text-sm font-medium">
+
+                                Harga
+
+                            </span>
+
+                            <span class="text-error">*</span>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            name="tikets[${ticketIndex}][harga]"
+                            class="input input-bordered w-full">
+
+                    </div>
+
+                    <div class="space-y-2">
+
+                        <label class="block">
+
+                            <span class="text-sm font-medium">
+
+                                Stok
+
+                            </span>
+
+                            <span class="text-error">*</span>
+
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            name="tikets[${ticketIndex}][stok]"
+                            class="input input-bordered w-full">
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        container.appendChild(card);
+
+        ticketIndex++;
+
+    }
+
+    // Tambah tiket
+    addButton.addEventListener('click', function () {
+
+        renderTicket();
+
+    });
+
+    // Hapus tiket
+    container.addEventListener('click', function (e) {
+
+        if (e.target.classList.contains('remove-ticket')) {
+
+            e.target.closest('.card').remove();
+
+        }
+
+    });
+
+    // Default satu tiket
+    renderTicket();
+
+});
+
+</script>
+
+@endsection
