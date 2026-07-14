@@ -119,6 +119,25 @@
             </div>
         @endif
 
+        <!-- Related Events Section -->
+        @if (isset($relatedEvents) && $relatedEvents->count() > 0)
+            <div class="mt-10">
+                <h2 class="text-2xl font-bold mb-6">Event Terkait</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach ($relatedEvents as $related)
+                        <x-event-card
+                            :title="$related->judul ?? $related->nama"
+                            :date="$related->tanggal_waktu ?? $related->tanggal"
+                            :location="$related->lokasi ?? 'Lokasi tidak tersedia'"
+                            :price="$related->tikets->min('harga')"
+                            :image="$related->gambar"
+                            :href="route('events.show', $related)"
+                        />
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
         <!-- Back Button -->
         <div class="mt-8">
             <a href="{{ route('home') }}" class="btn btn-outline btn-wide">
