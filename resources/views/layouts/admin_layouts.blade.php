@@ -38,6 +38,25 @@
                             Manajemen Kategori
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('admin.events.index') }}"
+                        class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors {{ request()->routeIs('admin.events.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                class="w-5 h-5 mr-3">
+                                <path fill="currentColor"
+                                    d="M19 3H5c-1.1 0-2 .9-2 2v14a2
+                                    2 0 0 0 2 2h14a2
+                                    2 0 0 0 2-2V5c0-1.1-.9-2-2-2m0
+                                    16H5V8h14zm0-13H5V5h14z"/>
+                            </svg>
+
+                            Manajemen Event
+                        </a>
+                    </li>
                 </ul>
             </div>
 
