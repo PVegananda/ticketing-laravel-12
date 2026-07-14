@@ -31,4 +31,15 @@ Route::prefix('admin')->name('categories.')->middleware(['auth', 'verified'])->g
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 
+// Event routes (admin)
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+
+        Route::resource('events', EventController::class)
+            ->except('show');
+
+    });
+
 require __DIR__.'/auth.php';
