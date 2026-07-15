@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Ditambahkan untuk fitur soft delete
 
 class Order extends Model
 {
+    use SoftDeletes; // Menggunakan trait SoftDeletes
+
     protected $fillable = [
         'user_id',
         'event_id',

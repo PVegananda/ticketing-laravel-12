@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Ditambahkan untuk fitur soft delete
 use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes; // Menggunakan trait SoftDeletes
 
     protected $fillable = [
         'user_id',
