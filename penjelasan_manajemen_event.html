@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penjelasan Lengkap Manajemen Event - E-Ticketing Laravel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:13px;line-height:1.7;color:#1e293b;background:#f8fafc}
+@media print{body{background:white;font-size:12px}.no-print{display:none}.page-break{page-break-before:always}pre{white-space:pre-wrap;word-break:break-all}}
+.container{max-width:900px;margin:0 auto;padding:24px}
+.cover{background:linear-gradient(135deg,#1e40af 0%,#7c3aed 50%,#0f172a 100%);color:white;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 40px}
+.cover h1{font-size:40px;font-weight:800;line-height:1.2;margin-bottom:16px}
+.cover h2{font-size:18px;font-weight:400;opacity:.8;margin-bottom:50px}
+.info-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:30px 50px;margin-top:20px}
+.info-box p{margin:6px 0;font-size:14px}
+.section{background:white;border-radius:12px;padding:32px;margin:24px 0;box-shadow:0 1px 6px rgba(0,0,0,.07);border-left:4px solid #3b82f6}
+.section.green{border-left-color:#10b981}.section.purple{border-left-color:#8b5cf6}.section.orange{border-left-color:#f59e0b}.section.red{border-left-color:#ef4444}.section.teal{border-left-color:#14b8a6}.section.indigo{border-left-color:#6366f1}
+h2.stitle{font-size:20px;font-weight:700;color:#1e293b;margin-bottom:6px}
+.ssub{color:#64748b;font-size:13px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f1f5f9}
+h3{font-size:15px;font-weight:700;color:#334155;margin:20px 0 8px}
+h4{font-size:13px;font-weight:700;color:#475569;margin:14px 0 6px}
+p{margin:8px 0;color:#475569}
+pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:16px;font-family:'Courier New',monospace;font-size:11.5px;line-height:1.6;overflow-x:auto;margin:10px 0;white-space:pre-wrap;word-break:break-word}
+code{background:#f1f5f9;color:#e11d48;padding:2px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:11.5px}
+pre code{background:transparent;color:inherit;padding:0}
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0}
+.fi{background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600}
+.fi.g{background:linear-gradient(135deg,#10b981,#059669)}.fi.p{background:linear-gradient(135deg,#8b5cf6,#7c3aed)}.fi.o{background:linear-gradient(135deg,#f59e0b,#d97706)}.fi.r{background:linear-gradient(135deg,#ef4444,#dc2626)}
+.fa{color:#94a3b8;font-size:18px;font-weight:bold}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:12px}
+th{background:#f1f5f9;color:#475569;font-weight:700;padding:10px 12px;text-align:left;border:1px solid #e2e8f0}
+td{padding:9px 12px;border:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.callout{border-radius:8px;padding:14px 18px;margin:12px 0;display:flex;gap:10px;font-size:13px}
+.callout.info{background:#eff6ff;border-left:3px solid #3b82f6}
+.callout.warning{background:#fffbeb;border-left:3px solid #f59e0b}
+.callout.success{background:#f0fdf4;border-left:3px solid #10b981}
+.callout.danger{background:#fef2f2;border-left:3px solid #ef4444}
+.num-list{list-style:none;margin:10px 0}
+.num-list li{display:flex;gap:12px;margin:8px 0;align-items:flex-start}
+.num-list li .num{background:#3b82f6;color:white;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+.badge{display:inline-block;padding:2px 10px;border-radius:30px;font-size:11px;font-weight:600}
+.badge.blue{background:#dbeafe;color:#1d4ed8}.badge.green{background:#dcfce7;color:#15803d}.badge.yellow{background:#fef9c3;color:#854d0e}.badge.red{background:#fee2e2;color:#b91c1c}.badge.purple{background:#f3e8ff;color:#7e22ce}
+.rule-box{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;margin:12px 0}
+.rule-box h4{color:#b91c1c;margin-top:0}.rule-box p{color:#7f1d1d}
+.toc{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:24px;margin:24px 0}
+.toc ol{padding-left:20px}.toc li{margin:6px 0;color:#3b82f6;font-weight:500}.toc li span{color:#64748b;font-weight:400}
+.ch{background:linear-gradient(135deg,#1e40af,#7c3aed);color:white;padding:20px 32px;border-radius:10px;margin:32px 0 20px}
+.ch .cnum{font-size:12px;opacity:.7;text-transform:uppercase;letter-spacing:2px}
+.ch h2{font-size:22px;margin-top:4px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:6px 20px;border-radius:30px;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:30px">Dokumentasi Teknis</div>
+  <h1>Penjelasan Lengkap<br>Manajemen Event</h1>
+  <h2>Sistem E-Ticketing &ndash; Laravel 12</h2>
+  <div style="width:60px;height:4px;background:rgba(255,255,255,.5);border-radius:2px;margin:30px auto"></div>
+  <div class="info-box">
+    <p>Nama &nbsp;&nbsp;&nbsp;: <strong>Pasyah Wahyu Insanni Vegananda</strong></p>
+    <p>NIM &nbsp;&nbsp;&nbsp;&nbsp;: <strong>A11.2025.16575</strong></p>
+    <p>Skema &nbsp;: <strong>Web Developer</strong></p>
+    <p>Modul &nbsp;: <strong>Manajemen Event (CRUD + Soft Delete)</strong></p>
+  </div>
+</div>
+<div class="container">
+<div class="toc">
+  <h3>Daftar Isi</h3>
+  <ol>
+    <li>Gambaran Umum Sistem <span>&ndash; Apa itu Manajemen Event?</span></li>
+    <li>Alur Coding Laravel <span>&ndash; Migration &rarr; Model &rarr; Controller &rarr; Route &rarr; View</span></li>
+    <li>Migration Database <span>&ndash; Struktur tabel events, kategoris, tikets</span></li>
+    <li>Model Eloquent <span>&ndash; Relasi, Accessor, Scope, SoftDeletes</span></li>
+    <li>Routes &amp; Middleware <span>&ndash; Daftar URL dan proteksi akses</span></li>
+    <li>Controller (EventController) <span>&ndash; Penjelasan tiap method</span></li>
+    <li>Form Request (EventFormRequest) <span>&ndash; Validasi data masuk</span></li>
+    <li>Penjelasan Tiap Field Form <span>&ndash; Tambah &amp; Edit Event</span></li>
+    <li>Aturan Bisnis: Event dengan Tiket Terjual <span>&ndash; Proteksi integritas data</span></li>
+    <li>Soft Delete <span>&ndash; Konsep, cara kerja, dan implementasinya</span></li>
+    <li>Alur End-to-End <span>&ndash; Dari klik sampai data tersimpan</span></li>
+  </ol>
+</div>
+
+<div class="ch"><div class="cnum">Bab 1</div><h2>Gambaran Umum Sistem</h2></div>
+<div class="section">
+  <h2 class="stitle">Apa Itu Manajemen Event?</h2>
+  <p class="ssub">Fitur inti dari sistem e-ticketing ini</p>
+  <p>Manajemen Event adalah fitur utama yang memungkinkan <strong>Admin</strong> mengelola data event. Admin bisa:</p>
+  <ul class="num-list">
+    <li><span class="num">1</span><div><strong>Melihat</strong> daftar semua event dengan filter, pencarian, dan sorting.</div></li>
+    <li><span class="num">2</span><div><strong>Menambah</strong> event baru lengkap dengan tiket (reguler/premium).</div></li>
+    <li><span class="num">3</span><div><strong>Mengedit</strong> event &mdash; dengan batasan tertentu jika tiket sudah terjual.</div></li>
+    <li><span class="num">4</span><div><strong>Menghapus</strong> event &mdash; hanya jika belum ada penjualan (Soft Delete).</div></li>
+    <li><span class="num">5</span><div><strong>Melihat detail</strong> event di halaman publik.</div></li>
+  </ul>
+  <div class="callout info"><span style="font-size:18px">&#8505;&#65039;</span><div>Fitur ini hanya bisa diakses oleh user yang sudah <strong>login</strong> dan sudah <strong>verifikasi email</strong>. Middleware <code>auth</code> dan <code>verified</code> menjaga akses ini.</div></div>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 2</div><h2>Alur Coding Laravel</h2></div>
+<div class="section">
+  <h2 class="stitle">Urutan File yang Dibuat dan Fungsinya</h2>
+  <p class="ssub">Laravel menggunakan pola arsitektur MVC (Model&ndash;View&ndash;Controller)</p>
+  <div class="flow">
+    <div class="fi">1. Migration</div><div class="fa">&rarr;</div>
+    <div class="fi g">2. Model</div><div class="fa">&rarr;</div>
+    <div class="fi p">3. Form Request</div><div class="fa">&rarr;</div>
+    <div class="fi o">4. Controller</div><div class="fa">&rarr;</div>
+    <div class="fi r">5. Routes</div><div class="fa">&rarr;</div>
+    <div class="fi">6. Views</div>
+  </div>
+  <table>
+    <tr><th>Tahap</th><th>File</th><th>Fungsi</th></tr>
+    <tr><td><span class="badge blue">1</span> Migration</td><td><code>database/migrations/..._create_events_table.php</code></td><td>Mendefinisikan struktur kolom di database (blueprint tabel)</td></tr>
+    <tr><td><span class="badge green">2</span> Model</td><td><code>app/Models/Event.php</code></td><td>Representasi tabel di PHP. Berisi relasi, accessor, dan business logic</td></tr>
+    <tr><td><span class="badge purple">3</span> Form Request</td><td><code>app/Http/Requests/EventFormRequest.php</code></td><td>Validasi data dari form sebelum sampai ke Controller</td></tr>
+    <tr><td><span class="badge yellow">4</span> Controller</td><td><code>app/Http/Controllers/EventController.php</code></td><td>Otak sistem: terima request, proses data, kirim response ke View</td></tr>
+    <tr><td><span class="badge red">5</span> Routes</td><td><code>routes/web.php</code></td><td>Mendaftarkan URL dan menghubungkan ke method Controller</td></tr>
+    <tr><td><span class="badge blue">6</span> Views</td><td><code>resources/views/pages/admin/events/</code></td><td>Tampilan HTML: halaman daftar, form tambah, form edit</td></tr>
+  </table>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 3</div><h2>Migration Database</h2></div>
+<div class="section green">
+  <h2 class="stitle">Struktur Tabel Database</h2>
+  <p class="ssub">Migration mendefinisikan struktur tabel. Jalankan dengan <code>php artisan migrate</code></p>
+  <h3>Tabel: <code>events</code></h3>
+  <pre>Schema::create('events', function (Blueprint $table) {
+    $table-&gt;id();                       // Kolom id auto-increment (Primary Key)
+    $table-&gt;foreignId('user_id')        // ID admin yang membuat event
+          -&gt;constrained()-&gt;cascadeOnDelete();
+    $table-&gt;foreignId('kategori_id')    // ID kategori (Konser, Seminar, dll)
+          -&gt;constrained('kategoris')-&gt;cascadeOnDelete();
+    $table-&gt;string('judul');            // Nama / judul event
+    $table-&gt;text('deskripsi');          // Keterangan panjang event
+    $table-&gt;string('lokasi');           // Tempat event diadakan
+    $table-&gt;string('gambar')-&gt;nullable(); // Nama file gambar (opsional)
+    $table-&gt;dateTime('tanggal_waktu'); // Tanggal dan jam event
+    $table-&gt;softDeletes();              // Kolom deleted_at untuk Soft Delete
+    $table-&gt;timestamps();              // created_at dan updated_at otomatis
+});</pre>
+  <h3>Tabel: <code>tikets</code></h3>
+  <pre>Schema::create('tikets', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;foreignId('event_id')-&gt;constrained()-&gt;cascadeOnDelete();
+    $table-&gt;enum('tipe', ['reguler', 'premium']); // Hanya boleh 2 nilai
+    $table-&gt;decimal('harga', 10, 2);    // Harga desimal max 10 digit, 2 di belakang koma
+    $table-&gt;integer('stok');            // Jumlah tiket tersedia
+    $table-&gt;softDeletes();
+    $table-&gt;timestamps();
+});</pre>
+  <div class="callout warning"><span style="font-size:18px">&#9888;&#65039;</span><div><strong>Soft Delete ditambahkan belakangan</strong> dengan migration terpisah menggunakan <code>$table-&gt;softDeletes()</code> di dalam <code>Schema::table()</code> (bukan <code>Schema::create()</code>).</div></div>
+  <h3>Penjelasan Kolom <code>deleted_at</code></h3>
+  <table>
+    <tr><th>Kondisi</th><th>Isi kolom <code>deleted_at</code></th><th>Muncul di query normal?</th></tr>
+    <tr><td>Data aktif / belum dihapus</td><td><code>NULL</code></td><td>&#10003; Ya</td></tr>
+    <tr><td>Data sudah di-soft-delete</td><td><code>2026-07-15 09:00:00</code></td><td>&#10007; Tidak</td></tr>
+  </table>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 4</div><h2>Model Eloquent</h2></div>
+<div class="section purple">
+  <h2 class="stitle">Model Event.php &ndash; Penjelasan Lengkap</h2>
+  <p class="ssub">Model adalah representasi tabel di PHP. Satu model = satu tabel.</p>
+  <h3>1. Trait yang Digunakan</h3>
+  <pre>use HasFactory;  // Memungkinkan pembuatan data dummy (factory/seeder)
+use SoftDeletes; // Mengaktifkan fitur soft delete pada model ini</pre>
+  <h3>2. Fillable &ndash; Kolom yang Boleh Diisi Massal</h3>
+  <pre>protected $fillable = [
+    'user_id',       // ID admin pembuat
+    'kategori_id',   // ID kategori event
+    'judul',         // Judul event
+    'deskripsi',     // Deskripsi event
+    'lokasi',        // Lokasi event
+    'gambar',        // Nama file gambar
+    'tanggal_waktu', // Tanggal dan waktu event
+];</pre>
+  <div class="callout info"><span style="font-size:18px">&#8505;&#65039;</span><div><strong>Kenapa ada <code>$fillable</code>?</strong> Ini proteksi dari Mass Assignment Attack. Hanya kolom yang terdaftar yang bisa diisi via <code>Event::create([...])</code>.</div></div>
+  <h3>3. Relasi Antar Tabel</h3>
+  <table>
+    <tr><th>Method</th><th>Jenis Relasi</th><th>Artinya</th></tr>
+    <tr><td><code>kategori()</code></td><td><code>belongsTo(Kategori)</code></td><td>Satu event punya SATU kategori</td></tr>
+    <tr><td><code>user()</code></td><td><code>belongsTo(User)</code></td><td>Satu event dibuat oleh SATU admin</td></tr>
+    <tr><td><code>tikets()</code></td><td><code>hasMany(Tiket)</code></td><td>Satu event punya BANYAK tiket</td></tr>
+    <tr><td><code>orders()</code></td><td><code>hasMany(Order)</code></td><td>Satu event punya BANYAK order/pembelian</td></tr>
+  </table>
+  <h3>4. Accessor &ndash; Atribut Tambahan Otomatis</h3>
+  <pre>// getStatusAttribute() -&gt; dipanggil dengan $event-&gt;status
+public function getStatusAttribute() {
+    if ($this-&gt;tanggal_waktu-&gt;isFuture()) {
+        return 'Upcoming';   // Belum berlangsung
+    }
+    if ($this-&gt;tanggal_waktu-&gt;copy()-&gt;addHours(3)-&gt;isFuture()) {
+        return 'Ongoing';    // Sedang berlangsung (dalam 3 jam)
+    }
+    return 'Completed';      // Sudah selesai
+}
+
+// getImageUrlAttribute() -&gt; dipanggil dengan $event-&gt;image_url
+public function getImageUrlAttribute() {
+    if (filter_var($this-&gt;gambar, FILTER_VALIDATE_URL)) {
+        return $this-&gt;gambar;  // URL eksternal langsung dipakai
+    }
+    if ($this-&gt;gambar &amp;&amp; Storage::disk('public')-&gt;exists($this-&gt;gambar)) {
+        return Storage::url($this-&gt;gambar);  // File ada di storage lokal
+    }
+    return Storage::url('edm_concert.png');  // Fallback: gambar default
+}</pre>
+  <h3>5. Method hasSales() &ndash; Cek Ada Penjualan</h3>
+  <pre>public function hasSales() {
+    // Cek apakah ada minimal 1 order untuk event ini
+    // exists() lebih cepat dari count() karena berhenti di baris pertama
+    return $this-&gt;orders()-&gt;exists();
+}</pre>
+  <h3>6. Query Scope &ndash; Filter Bawaan</h3>
+  <pre>// Dipakai dengan Event::upcoming(), Event::ongoing(), Event::completed()
+public function scopeUpcoming($query) {
+    return $query-&gt;where('tanggal_waktu', '&gt;', now());
+}
+public function scopeOngoing($query) {
+    return $query-&gt;where('tanggal_waktu', '&lt;=', now())
+                 -&gt;where('tanggal_waktu', '&gt;=', now()-&gt;subHours(3));
+}
+public function scopeCompleted($query) {
+    return $query-&gt;where('tanggal_waktu', '&lt;', now()-&gt;subHours(3));
+}</pre>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 5</div><h2>Routes &amp; Middleware</h2></div>
+<div class="section orange">
+  <h2 class="stitle">Daftar URL Manajemen Event</h2>
+  <p class="ssub">File: <code>routes/web.php</code> &ndash; Menghubungkan URL ke method Controller</p>
+  <pre>Route::prefix('admin')-&gt;name('admin.')-&gt;middleware(['auth', 'verified'])-&gt;group(function () {
+    Route::resource('events', EventController::class);
+    // resource() otomatis membuat 7 route sekaligus:
+    // GET    /admin/events             -&gt; index   (daftar event)
+    // GET    /admin/events/create      -&gt; create  (form tambah)
+    // POST   /admin/events             -&gt; store   (simpan event baru)
+    // GET    /admin/events/{event}/edit -&gt; edit    (form edit)
+    // PUT    /admin/events/{event}     -&gt; update  (simpan perubahan)
+    // DELETE /admin/events/{event}    -&gt; destroy (hapus event)
+});</pre>
+  <table>
+    <tr><th>HTTP</th><th>URL</th><th>Action</th><th>Nama Route</th><th>Tujuan</th></tr>
+    <tr><td><span class="badge green">GET</span></td><td><code>/admin/events</code></td><td>index</td><td><code>admin.events.index</code></td><td>Tampilkan daftar event + filter</td></tr>
+    <tr><td><span class="badge green">GET</span></td><td><code>/admin/events/create</code></td><td>create</td><td><code>admin.events.create</code></td><td>Form tambah event</td></tr>
+    <tr><td><span class="badge yellow">POST</span></td><td><code>/admin/events</code></td><td>store</td><td><code>admin.events.store</code></td><td>Simpan event baru</td></tr>
+    <tr><td><span class="badge green">GET</span></td><td><code>/admin/events/{id}/edit</code></td><td>edit</td><td><code>admin.events.edit</code></td><td>Form edit event</td></tr>
+    <tr><td><span class="badge blue">PUT</span></td><td><code>/admin/events/{id}</code></td><td>update</td><td><code>admin.events.update</code></td><td>Simpan perubahan event</td></tr>
+    <tr><td><span class="badge red">DELETE</span></td><td><code>/admin/events/{id}</code></td><td>destroy</td><td><code>admin.events.destroy</code></td><td>Soft delete event</td></tr>
+  </table>
+  <div class="callout warning"><span style="font-size:18px">&#9888;&#65039;</span><div><strong>Method Spoofing:</strong> HTML form hanya mendukung GET dan POST. Untuk PUT/DELETE, Laravel menggunakan <code>@method('DELETE')</code> yang menambahkan field tersembunyi <code>_method</code> ke dalam form.</div></div>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 6</div><h2>EventController &ndash; Otak Sistem</h2></div>
+<div class="section">
+  <h2 class="stitle">Method index() &ndash; Daftar Event</h2>
+  <p class="ssub">URL: GET /admin/events | Daftar event dengan filter, pencarian, sorting, pagination</p>
+  <pre>public function index(Request $request)
+{
+    $events = Event::with(['kategori', 'tikets'])
+        // with() = eager loading: ambil relasi sekaligus, cegah N+1 Query Problem
+        -&gt;when($request-&gt;kategori_id, function ($query) use ($request) {
+            $query-&gt;where('kategori_id', $request-&gt;kategori_id);
+            // Filter: hanya event dengan kategori yang dipilih
+        })
+        -&gt;when($request-&gt;search, function ($query) use ($request) {
+            $query-&gt;where(function ($q) use ($request) {
+                $q-&gt;where('judul', 'like', '%' . $request-&gt;search . '%')
+                  -&gt;orWhere('lokasi', 'like', '%' . $request-&gt;search . '%');
+            });
+            // Pencarian di kolom judul ATAU lokasi (%keyword% = di mana saja)
+        })
+        -&gt;orderBy('tanggal_waktu', $request-&gt;get('sort', 'asc'))
+        // Sorting: default asc (terlama), bisa desc (terbaru)
+        -&gt;paginate(10); // Pagination: 10 event per halaman
+
+    $kategoris = Kategori::all(); // Untuk dropdown filter
+    return view('pages.admin.events.index', compact('events', 'kategoris'));
+}</pre>
+</div>
+<div class="section green">
+  <h2 class="stitle">Method store() &ndash; Simpan Event Baru</h2>
+  <p class="ssub">URL: POST /admin/events | Upload gambar, validasi, simpan ke database</p>
+  <pre>public function store(EventFormRequest $request)
+{
+    // EventFormRequest otomatis validasi SEBELUM masuk ke sini
+    // Jika gagal -> redirect balik ke form dengan error
+    $validated = $request-&gt;validated();
+
+    if ($request-&gt;hasFile('gambar')) {
+        // store() simpan file dengan nama acak: contoh "events/AbcXyz.jpg"
+        $validated['gambar'] = $request-&gt;file('gambar')-&gt;store('events', 'public');
+    } else {
+        $validated['gambar'] = 'konser.jpg'; // Gambar default
+    }
+
+    $event = Event::create([
+        'user_id'       =&gt; Auth::id(), // ID admin yang sedang login
+        'kategori_id'   =&gt; $validated['kategori_id'],
+        'judul'         =&gt; $validated['judul'],
+        'deskripsi'     =&gt; $validated['deskripsi'],
+        'lokasi'        =&gt; $validated['lokasi'],
+        'gambar'        =&gt; $validated['gambar'],
+        'tanggal_waktu' =&gt; $validated['tanggal_waktu'],
+    ]);
+
+    // Simpan semua tiket yang dikirim sebagai array dari form
+    foreach ($validated['tikets'] as $tiket) {
+        $event-&gt;tikets()-&gt;create([
+            'tipe'  =&gt; $tiket['tipe'],
+            'harga' =&gt; $tiket['harga'],
+            'stok'  =&gt; $tiket['stok'],
+        ]);
+    }
+
+    return redirect()-&gt;route('admin.events.index')
+                     -&gt;with('success', 'Event berhasil ditambahkan.');
+}</pre>
+</div>
+<div class="section orange">
+  <h2 class="stitle">Method update() &ndash; Simpan Perubahan Event</h2>
+  <p class="ssub">URL: PUT /admin/events/{event} | Ada proteksi khusus untuk event berpenjualan</p>
+  <pre>public function update(EventFormRequest $request, Event $event)
+{
+    $validated = $request-&gt;validated();
+
+    // PROTEKSI INTEGRITAS DATA:
+    // Jika event sudah ada penjualan, tanggal tidak boleh diubah
+    // Alasan: tanggal adalah dasar kontrak pembelian tiket
+    if ($event-&gt;hasSales() &amp;&amp;
+        Carbon::parse($validated['tanggal_waktu'])-&gt;format('Y-m-d H:i:s')
+        != $event-&gt;tanggal_waktu-&gt;format('Y-m-d H:i:s')) {
+        return back()-&gt;withErrors([
+            'tanggal_waktu' =&gt; 'Tanggal tidak dapat diubah karena sudah ada penjualan.'
+        ])-&gt;withInput();
+    }
+
+    // Hanya update gambar jika ada file baru yang diupload
+    if ($request-&gt;hasFile('gambar')) {
+        // Hapus gambar lama dari storage dulu
+        if ($event-&gt;gambar !== 'konser.jpg' &amp;&amp;
+            Storage::disk('public')-&gt;exists($event-&gt;gambar)) {
+            Storage::disk('public')-&gt;delete($event-&gt;gambar);
+        }
+        $validated['gambar'] = $request-&gt;file('gambar')-&gt;store('events', 'public');
+    } else {
+        $validated['gambar'] = $event-&gt;gambar; // Pertahankan gambar lama
+    }
+
+    $event-&gt;update([...]);
+
+    // Tiket lama yang tidak ada di form dihapus (HANYA jika belum ada penjualan)
+    if (!$event-&gt;hasSales()) {
+        $event-&gt;tikets()-&gt;whereNotIn('id', $ticketIds)-&gt;delete();
+    }
+}</pre>
+</div>
+<div class="section red">
+  <h2 class="stitle">Method destroy() &ndash; Hapus Event (Soft Delete)</h2>
+  <p class="ssub">URL: DELETE /admin/events/{event} | Event tidak benar-benar terhapus</p>
+  <pre>public function destroy(Event $event)
+{
+    // Cek ada penjualan? Jika ya, tolak penghapusan
+    if ($event-&gt;hasSales()) {
+        return redirect()-&gt;route('admin.events.index')
+                         -&gt;with('error', 'Event tidak dapat dihapus karena sudah ada penjualan.');
+    }
+
+    // Hapus file gambar dari storage (kecuali gambar default)
+    if ($event-&gt;gambar !== 'konser.jpg' &amp;&amp;
+        Storage::disk('public')-&gt;exists($event-&gt;gambar)) {
+        Storage::disk('public')-&gt;delete($event-&gt;gambar);
+    }
+
+    // Soft delete: mengisi kolom deleted_at dengan waktu sekarang
+    // Data TIDAK dihapus dari database!
+    $event-&gt;delete();
+
+    return redirect()-&gt;route('admin.events.index')
+                     -&gt;with('success', 'Event berhasil dihapus.');
+}</pre>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 7</div><h2>Form Request &ndash; Validasi Data</h2></div>
+<div class="section teal">
+  <h2 class="stitle">EventFormRequest &ndash; Penjaga Gerbang Data</h2>
+  <p class="ssub"><code>app/Http/Requests/EventFormRequest.php</code> &ndash; Semua data divalidasi sebelum masuk ke Controller</p>
+  <pre>public function rules(): array
+{
+    $rules = [
+        'judul'       =&gt; 'required|string|max:255',
+        // required = wajib, string = teks, max:255 = maks 255 karakter
+
+        'deskripsi'   =&gt; 'required|string',
+        'lokasi'      =&gt; 'required|string|max:255',
+
+        'kategori_id' =&gt; 'required|exists:kategoris,id',
+        // exists: ID harus ada di tabel kategoris
+
+        'gambar'      =&gt; 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        // nullable = opsional, image = file gambar, mimes = format, max = 2MB
+
+        'tikets'         =&gt; 'required|array|min:1', // minimal 1 tiket
+        'tikets.*.tipe'  =&gt; 'required|in:reguler,premium',
+        'tikets.*.harga' =&gt; 'required|numeric|min:0',
+        'tikets.*.stok'  =&gt; 'required|integer|min:0',
+        'tikets.*.id'    =&gt; 'nullable|exists:tikets,id',
+    ];
+
+    // Validasi berbeda untuk Tambah vs Edit:
+    if ($this-&gt;isMethod('post')) {
+        $rules['tanggal_waktu'] = 'required|date|after:now';
+        // Saat TAMBAH: tanggal harus di masa depan
+    } else {
+        $rules['tanggal_waktu'] = 'required|date';
+        // Saat EDIT: tanggal bebas (event lama boleh sudah lewat)
+    }
+    return $rules;
+}</pre>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 8</div><h2>Penjelasan Tiap Field Form</h2></div>
+<div class="section indigo">
+  <h2 class="stitle">Form Tambah Event (Create)</h2>
+  <p class="ssub">URL: /admin/events/create</p>
+  <table>
+    <tr><th>Field</th><th>Tipe</th><th>Wajib?</th><th>Penjelasan</th></tr>
+    <tr><td><strong>Judul Event</strong></td><td><code>text</code></td><td><span class="badge red">Ya</span></td><td>Nama event. Maks 255 karakter.</td></tr>
+    <tr><td><strong>Kategori</strong></td><td><code>select</code></td><td><span class="badge red">Ya</span></td><td>Dropdown dari tabel <code>kategoris</code> (Konser, Seminar, Workshop).</td></tr>
+    <tr><td><strong>Lokasi</strong></td><td><code>text</code></td><td><span class="badge red">Ya</span></td><td>Tempat event. Maks 255 karakter.</td></tr>
+    <tr><td><strong>Tanggal &amp; Waktu</strong></td><td><code>datetime-local</code></td><td><span class="badge red">Ya</span></td><td>Harus di masa depan saat menambah event baru.</td></tr>
+    <tr><td><strong>Gambar Event</strong></td><td><code>file</code></td><td><span class="badge green">Tidak</span></td><td>JPG/PNG, maks 2MB. Jika kosong, pakai gambar default.</td></tr>
+    <tr><td><strong>Deskripsi</strong></td><td><code>textarea</code></td><td><span class="badge red">Ya</span></td><td>Keterangan panjang tentang event.</td></tr>
+    <tr><td><strong>Tiket - Tipe</strong></td><td><code>select</code></td><td><span class="badge red">Ya</span></td><td><em>Reguler</em> atau <em>Premium</em>. Bisa lebih dari 1 jenis tiket.</td></tr>
+    <tr><td><strong>Tiket - Harga</strong></td><td><code>number</code></td><td><span class="badge red">Ya</span></td><td>Harga dalam Rupiah. Min 0 (boleh gratis).</td></tr>
+    <tr><td><strong>Tiket - Stok</strong></td><td><code>number</code></td><td><span class="badge red">Ya</span></td><td>Jumlah tiket tersedia. Min 0.</td></tr>
+  </table>
+  <div class="callout info"><span style="font-size:18px">&#128161;</span><div><strong>Tiket Dinamis:</strong> Section tiket menggunakan JavaScript. Klik tombol "+ Tambah Tiket" untuk menambah card tiket baru tanpa refresh halaman. Semua dikirim sebagai array <code>tikets[n][tipe]</code>, <code>tikets[n][harga]</code>, <code>tikets[n][stok]</code>.</div></div>
+</div>
+<div class="section">
+  <h2 class="stitle">Form Edit Event &ndash; Perbedaan dengan Form Tambah</h2>
+  <p class="ssub">URL: /admin/events/{id}/edit | Ada field yang dikunci jika sudah ada penjualan</p>
+  <table>
+    <tr><th>Field</th><th>Belum ada penjualan</th><th>Sudah ada penjualan</th></tr>
+    <tr><td>Judul</td><td>&#10003; Bisa diedit</td><td>&#10003; Bisa diedit</td></tr>
+    <tr><td>Kategori</td><td>&#10003; Bisa diedit</td><td>&#10003; Bisa diedit</td></tr>
+    <tr><td>Lokasi</td><td>&#10003; Bisa diedit</td><td>&#10003; Bisa diedit</td></tr>
+    <tr><td><strong>Tanggal &amp; Waktu</strong></td><td>&#10003; Bisa diedit</td><td>&#128274; <strong>READ-ONLY &ndash; tidak bisa diubah</strong></td></tr>
+    <tr><td>Gambar</td><td>&#10003; Bisa diedit</td><td>&#10003; Bisa diedit</td></tr>
+    <tr><td>Deskripsi</td><td>&#10003; Bisa diedit</td><td>&#10003; Bisa diedit</td></tr>
+    <tr><td>Tambah Tiket Baru</td><td>&#10003; Bisa</td><td>&#10007; Tidak bisa</td></tr>
+    <tr><td>Hapus Tiket Lama</td><td>&#10003; Bisa</td><td>&#10007; Tidak bisa</td></tr>
+  </table>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 9</div><h2>Aturan Bisnis: Proteksi Event Berpenjualan</h2></div>
+<div class="section red">
+  <h2 class="stitle">Kenapa Ada Batasan Jika Sudah Ada Penjualan?</h2>
+  <p class="ssub">Konsep data integrity &ndash; menjaga agar data tidak saling bertentangan</p>
+  <div class="callout danger"><span style="font-size:18px">&#128683;</span><div><strong>Skenario berbahaya tanpa proteksi:</strong> Seseorang sudah membeli tiket "Konser Rock, 15 Agustus 2024, 19:00". Lalu admin mengubah tanggalnya ke "20 Desember 2026, 09:00". Pembeli tidak tahu dan sudah membuat rencana berdasarkan tanggal lama. Ini bisa merugikan banyak orang!</div></div>
+  <h3>Tiga Aturan Proteksi yang Diterapkan</h3>
+  <div class="rule-box">
+    <h4>Aturan 1: Tanggal Tidak Bisa Diubah</h4>
+    <p>Input field tanggal diberi atribut <code>readonly</code> di View. Di Controller ada pengecekan ulang menggunakan <code>Carbon::parse()</code> untuk memastikan tanggal tidak berubah meski melewati validasi front-end.</p>
+  </div>
+  <div class="rule-box">
+    <h4>Aturan 2: Tiket Tidak Bisa Ditambah atau Dihapus</h4>
+    <p>Tombol "+ Tambah Tiket" dan tombol "Hapus" di tiap card disembunyikan dengan <code>@unless($hasSales)</code>. Di Controller, penghapusan tiket dibungkus dengan <code>if (!$event-&gt;hasSales())</code>.</p>
+  </div>
+  <div class="rule-box">
+    <h4>Aturan 3: Event Tidak Bisa Dihapus</h4>
+    <p>Saat tombol "Delete" diklik, Controller mengecek <code>$event-&gt;hasSales()</code>. Jika sudah ada penjualan, proses dihentikan dan user diarahkan kembali dengan pesan error.</p>
+  </div>
+  <h3>Cara Sistem Mendeteksi "Ada Penjualan"</h3>
+  <pre>// Di Model Event.php:
+public function hasSales() {
+    // exists() lebih cepat dari count() karena berhenti di baris pertama
+    return $this-&gt;orders()-&gt;exists();
+}
+
+// Di Controller:
+$hasSales = $event-&gt;hasSales(); // true atau false
+
+// Di View (Blade):
+@if($hasSales)
+    // Tampilkan warning banner
+    // Kunci field tanggal (readonly)
+    // Sembunyikan tombol tambah/hapus tiket
+@endif</pre>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 10</div><h2>Soft Delete &ndash; Penghapusan Lunak</h2></div>
+<div class="section green">
+  <h2 class="stitle">Apa Itu Soft Delete?</h2>
+  <p class="ssub">Teknik "menghapus" data tanpa benar-benar menghapusnya dari database</p>
+  <div class="two-col">
+    <div>
+      <h3>Hard Delete (Penghapusan Normal)</h3>
+      <pre style="font-size:11px">$event-&gt;forceDelete();
+-- SQL:
+DELETE FROM events WHERE id = 1;
+-- Data HILANG SELAMANYA!</pre>
+    </div>
+    <div>
+      <h3>Soft Delete (Penghapusan Lunak)</h3>
+      <pre style="font-size:11px">$event-&gt;delete();
+-- SQL:
+UPDATE events SET deleted_at='2026-07-15'
+WHERE id = 1;
+-- Data MASIH ADA di database!</pre>
+    </div>
+  </div>
+  <h3>Cara Kerja Soft Delete di Laravel</h3>
+  <ul class="num-list">
+    <li><span class="num">1</span><div><strong>Trait SoftDeletes:</strong> Tambahkan <code>use SoftDeletes;</code> di dalam Model. Laravel tahu bahwa model ini menggunakan Soft Delete.</div></li>
+    <li><span class="num">2</span><div><strong>Kolom <code>deleted_at</code>:</strong> Dibuat dengan <code>$table-&gt;softDeletes()</code> di migration.</div></li>
+    <li><span class="num">3</span><div><strong>Query otomatis difilter:</strong> Setiap query Eloquent otomatis menambahkan <code>WHERE deleted_at IS NULL</code>. Data yang sudah di-soft-delete tidak muncul!</div></li>
+  </ul>
+  <h3>Model yang Menggunakan Soft Delete di Project Ini</h3>
+  <table>
+    <tr><th>Model</th><th>Tabel</th><th>Alasan</th></tr>
+    <tr><td><code>Event</code></td><td><code>events</code></td><td>Event bisa dipulihkan jika tidak sengaja dihapus</td></tr>
+    <tr><td><code>Kategori</code></td><td><code>kategoris</code></td><td>Kategori bisa "dinonaktifkan" tanpa merusak event lama</td></tr>
+    <tr><td><code>Tiket</code></td><td><code>tikets</code></td><td>Tiket yang dihapus tetap tercatat untuk audit transaksi</td></tr>
+    <tr><td><code>Order</code></td><td><code>orders</code></td><td>Data transaksi harus tetap ada sebagai rekam jejak</td></tr>
+    <tr><td><code>DetailOrder</code></td><td><code>detail_orders</code></td><td>Detail pembelian harus tetap ada bersama order-nya</td></tr>
+  </table>
+  <h3>Perintah-Perintah Soft Delete di Laravel</h3>
+  <pre>$event-&gt;delete();         // Soft delete (isi kolom deleted_at)
+$event-&gt;forceDelete();    // Hard delete (hapus permanen)
+$event-&gt;restore();        // Pulihkan data yang sudah di-soft-delete
+Event::onlyTrashed()-&gt;get();  // Query HANYA data yang sudah dihapus
+Event::withTrashed()-&gt;get();  // Query SEMUA data termasuk yang dihapus
+Event::all();                 // Query normal (otomatis WHERE deleted_at IS NULL)</pre>
+  <div class="callout success"><span style="font-size:18px">&#10003;</span><div><strong>Manfaat Soft Delete:</strong> Data bisa dipulihkan jika admin tidak sengaja menghapus. Riwayat transaksi tetap utuh. Berguna untuk audit log dan laporan historis.</div></div>
+</div>
+
+<div class="ch page-break"><div class="cnum">Bab 11</div><h2>Alur End-to-End</h2></div>
+<div class="section purple">
+  <h2 class="stitle">Skenario: Admin Tambah Event Baru</h2>
+  <p class="ssub">Langkah yang terjadi di balik layar dari klik pertama sampai data tersimpan</p>
+  <ul class="num-list">
+    <li><span class="num">1</span><div><strong>Admin klik "+ Tambah Event"</strong><br>Browser kirim request <code>GET /admin/events/create</code>.</div></li>
+    <li><span class="num">2</span><div><strong>Middleware verifikasi akses</strong><br>Cek: user login? Email terverifikasi? Jika tidak, redirect ke login.</div></li>
+    <li><span class="num">3</span><div><strong>Controller <code>create()</code></strong><br>Ambil semua kategori dari DB, kirim ke View.</div></li>
+    <li><span class="num">4</span><div><strong>View dirender</strong><br><code>create.blade.php</code> dirender menjadi HTML dan dikirim ke browser.</div></li>
+    <li><span class="num">5</span><div><strong>Admin isi form dan klik "Simpan"</strong><br>Browser kirim <code>POST /admin/events</code> dengan data form.</div></li>
+    <li><span class="num">6</span><div><strong>EventFormRequest validasi</strong><br>Jika gagal: redirect kembali ke form dengan pesan error. Data yang diisi tidak hilang (berkat <code>old()</code>).</div></li>
+    <li><span class="num">7</span><div><strong>Controller <code>store()</code></strong><br>Upload gambar &rarr; simpan event &rarr; simpan tiket &rarr; redirect dengan pesan sukses.</div></li>
+    <li><span class="num">8</span><div><strong>Database menyimpan</strong><br><code>INSERT INTO events ...</code> dan <code>INSERT INTO tikets ...</code>.</div></li>
+    <li><span class="num">9</span><div><strong>Admin diarahkan ke daftar event</strong><br>Event baru muncul di tabel. Selesai!</div></li>
+  </ul>
+</div>
+<div class="section">
+  <h2 class="stitle">Skenario: Admin Hapus Event (Soft Delete)</h2>
+  <p class="ssub">Alur yang terjadi saat tombol "Delete" diklik</p>
+  <ul class="num-list">
+    <li><span class="num">1</span><div><strong>Admin klik "Delete"</strong><br>Muncul dialog: "Yakin ingin menghapus event ini?"</div></li>
+    <li><span class="num">2</span><div><strong>Admin klik "OK"</strong><br>Browser kirim form <code>POST</code> dengan <code>@method('DELETE')</code>.</div></li>
+    <li><span class="num">3</span><div><strong>Controller <code>destroy()</code></strong><br>Cek <code>hasSales()</code>. Jika ada penjualan &rarr; redirect error. Jika tidak &rarr; lanjut.</div></li>
+    <li><span class="num">4</span><div><strong>File gambar dihapus</strong><br>File fisik di <code>storage/app/public/</code> dihapus.</div></li>
+    <li><span class="num">5</span><div><strong>Soft delete dieksekusi</strong><br><code>$event-&gt;delete()</code> mengisi kolom <code>deleted_at</code>. Data tidak hilang dari database.</div></li>
+    <li><span class="num">6</span><div><strong>Event hilang dari daftar</strong><br>Semua query otomatis filter <code>WHERE deleted_at IS NULL</code>.</div></li>
+  </ul>
+  <div class="callout info"><span style="font-size:18px">&#128269;</span><div>Buka phpMyAdmin, lihat tabel <code>events</code> &mdash; data yang dihapus masih ada di sana, hanya kolom <code>deleted_at</code>-nya terisi timestamp penghapusan.</div></div>
+</div>
+
+<div style="text-align:center;padding:40px 0 20px;color:#94a3b8;font-size:12px;border-top:1px solid #e2e8f0;margin-top:32px">
+  <p>Dokumentasi Teknis &ndash; Manajemen Event | Sistem E-Ticketing Laravel 12</p>
+  <p style="margin-top:4px"><strong>Pasyah Wahyu Insanni Vegananda</strong> &middot; NIM A11.2025.16575 &middot; Skema Web Developer</p>
+</div>
+</div>
+
+<div class="no-print" style="position:fixed;bottom:30px;right:30px">
+  <button onclick="window.print()" style="background:linear-gradient(135deg,#3b82f6,#7c3aed);color:white;border:none;padding:14px 28px;border-radius:50px;cursor:pointer;font-size:14px;font-weight:700;box-shadow:0 4px 20px rgba(59,130,246,.4)">
+    &#128424;&#65039; Cetak / Simpan PDF
+  </button>
+</div>
+</body></html>
