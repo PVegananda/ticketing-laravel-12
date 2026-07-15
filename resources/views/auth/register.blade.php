@@ -65,7 +65,7 @@
 
         <!-- Submit Button -->
         <div class="pt-4">
-            <button type="submit" class="btn btn-primary w-full text-white shadow-md hover:shadow-lg transition-all text-base font-semibold tracking-wide">
+            <button type="submit" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md hover:shadow-lg transition-all font-semibold tracking-wide">
                 Daftar Akun
             </button>
         </div>

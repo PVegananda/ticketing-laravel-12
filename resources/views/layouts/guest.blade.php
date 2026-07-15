@@ -22,23 +22,22 @@
 
 <body class="font-sans antialiased text-gray-900 bg-gray-50">
     <!-- Background Design -->
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative overflow-hidden">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50">
         
         <!-- Decorative Background Shapes -->
-        <div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-blue-600 to-indigo-800 transform -skew-y-6 origin-top-left -z-10 shadow-lg"></div>
-        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-        <div class="absolute bottom-0 left-10 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 opacity-60 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3 opacity-60 pointer-events-none"></div>
 
         <!-- Logo -->
-        <div class="mb-8 z-10 relative">
+        <div class="mb-8 z-10 relative text-center">
             <a href="/" class="flex flex-col items-center group">
-                <div class="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
-                    <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div class="w-16 h-16 bg-blue-600 rounded-2xl shadow-lg flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
                     </svg>
                 </div>
-                <h1 class="mt-4 text-3xl font-bold text-white tracking-tight drop-shadow-md">
-                    {{ config('app.name', 'Ticketing') }}
+                <h1 class="mt-4 text-3xl font-extrabold text-gray-800 tracking-tight">
+                    eTicketing Admin
                 </h1>
             </a>
         </div>
@@ -50,7 +49,7 @@
         
         <!-- Footer Info -->
         <div class="mt-8 text-sm text-gray-500 z-10">
-            &copy; {{ date('Y') }} {{ config('app.name', 'Ticketing') }}. All rights reserved.
+            &copy; {{ date('Y') }} eTicketing Admin. All rights reserved.
         </div>
         
     </div>
