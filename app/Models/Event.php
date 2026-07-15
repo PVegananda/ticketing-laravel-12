@@ -94,7 +94,7 @@ class Event extends Model
         }
 
         // Jika tidak ada gambar, gunakan gambar dummy secara acak atau default
-        return asset('storage/edm_concert.png');
+        return Storage::url('edm_concert.png');
     }
 }
 
