@@ -51,6 +51,17 @@
                 enctype="multipart/form-data" wajib ada jika form punya input file (gambar)!
                 Tanpa ini, file gambar tidak akan terkirim ke server.
             --}}
+            {{-- Menampilkan error validasi umum jika ada --}}
+            @if ($errors->any())
+                <div class="alert alert-error mb-4">
+                    <ul class="list-disc ml-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form
                 action="{{ route('admin.events.store') }}"
                 method="POST"
@@ -317,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ===== FUNGSI RENDER CARD TIKET =====
     // Membuat HTML card tiket baru dan menambahkannya ke container
-    function renderTicket() {
+    function renderTicket(tipe = 'reguler', harga = '', stok = '') {
 
         const card = document.createElement('div');
         card.className = 'card bg-base-200 border';
@@ -357,8 +368,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             name="tikets[${ticketIndex}][tipe]"
                             class="select select-bordered w-full">
 
-                            <option value="reguler">Reguler</option>
-                            <option value="premium">Premium</option>
+                            <option value="reguler" ${tipe === 'reguler' ? 'selected' : ''}>Reguler</option>
+                            <option value="premium" ${tipe === 'premium' ? 'selected' : ''}>Premium</option>
 
                         </select>
 
@@ -376,6 +387,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             type="number"
                             min="0"
                             name="tikets[${ticketIndex}][harga]"
+                            value="${harga}"
                             class="input input-bordered w-full">
 
                     </div>
@@ -392,6 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             type="number"
                             min="0"
                             name="tikets[${ticketIndex}][stok]"
+                            value="${stok}"
                             class="input input-bordered w-full">
 
                     </div>
@@ -430,8 +443,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ===== INISIALISASI =====
-    // Tampilkan 1 tiket langsung saat halaman dimuat (supaya tidak kosong)
-    renderTicket();
+    // Tampilkan 1 tiket langsung saat halaman dimuat atau isi dari data lama jika ada error validasi
+    const oldTikets = @json(old('tikets', []));
+    
+    if (oldTikets.length > 0) {
+        // Render tiket dari input sebelumnya yang gagal divalidasi
+        oldTikets.forEach(tiket => {
+            renderTicket(tiket.tipe, tiket.harga, tiket.stok);
+        });
+    } else {
+        // Tampilkan 1 tiket kosong secara default
+        renderTicket();
+    }
 
 });
 
