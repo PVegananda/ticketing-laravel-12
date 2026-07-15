@@ -56,6 +56,17 @@
 
         <div class="card-body">
 
+            {{-- Menampilkan error validasi umum jika ada --}}
+            @if ($errors->any())
+                <div class="alert alert-error mb-4">
+                    <ul class="list-disc ml-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form
                 action="{{ route('admin.events.update', $event) }}"
                 method="POST"
@@ -199,6 +210,12 @@
                             Kosongkan jika tidak ingin mengganti gambar.
 
                         </p>
+
+                        @error('gambar')
+                            <span class="text-error text-sm">
+                                {{ $message }}
+                            </span>
+                        @enderror
 
                     </div>
 

@@ -23,13 +23,12 @@ class EventFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             // Event
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'lokasi' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategoris,id',
-            'tanggal_waktu' => 'required|date|after:now',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
 
             // Tiket
@@ -39,6 +38,15 @@ class EventFormRequest extends FormRequest
             'tikets.*.stok' => 'required|integer|min:0',
             'tikets.*.id' => 'nullable|exists:tikets,id',
         ];
+
+        // Jika form edit (PUT/PATCH), tanggal_waktu tidak wajib after:now (karena event bisa saja sudah lewat)
+        if ($this->isMethod('post')) {
+            $rules['tanggal_waktu'] = 'required|date|after:now';
+        } else {
+            $rules['tanggal_waktu'] = 'required|date';
+        }
+
+        return $rules;
     }
 
     //method baru

@@ -177,7 +177,7 @@ class EventController extends Controller
         // Ini untuk menjaga integritas data pembelian tiket yang sudah terjadi
         if (
             $event->hasSales() &&
-            $validated['tanggal_waktu'] != $event->tanggal_waktu->format('Y-m-d H:i:s')
+            \Carbon\Carbon::parse($validated['tanggal_waktu'])->format('Y-m-d H:i:s') != $event->tanggal_waktu->format('Y-m-d H:i:s')
         ) {
             return back()->withErrors([
                 'tanggal_waktu' => 'Tanggal event tidak dapat diubah karena sudah memiliki penjualan tiket.'
