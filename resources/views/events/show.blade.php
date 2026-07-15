@@ -20,12 +20,12 @@
                     {{-- Kolom Kiri: Gambar Event --}}
                     <div class="lg:w-1/2">
                         @php
-                            {{--
+                            /*
                                 Logika menentukan URL gambar:
                                 1. Jika gambar adalah URL lengkap (https://...) → pakai langsung
                                 2. Jika gambar adalah nama file → cek di storage/public/
                                 3. Jika gambar tidak ada / file tidak ditemukan → pakai default konser.jpg
-                            --}}
+                            */
                             if ($event->gambar && filter_var($event->gambar, FILTER_VALIDATE_URL)) {
                                 $imageUrl = $event->gambar; // URL eksternal langsung dipakai
                             } else {
