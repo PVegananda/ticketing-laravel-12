@@ -1,127 +1,77 @@
 @extends('layouts.admin_layouts')
 
-@section('title', 'Manajemen Kategori')
+@section('title', 'Dashboard Utama')
 
 @section('content')
-
-    <div class="container mx-auto p-10">
-        <div class="flex">
-            <h1 class="text-3xl font-semibold mb-4">Manajemen Kategori</h1>
-            <button class="btn btn-primary ml-auto" onclick="add_modal.showModal()">Tambah Kategori</button>
-        </div>
-        <div class="overflow-x-auto rounded-box bg-white p-5 shadow-xs">
-            <table class="table">
-                <!-- head -->
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th class="w-3/4">Nama Kategori</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($categories as $index => $category)
-                    <tr>
-                        <th>{{ $index + 1 }}</th>
-                        <td>{{ $category->nama }}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary mr-2" onclick="openEditModal(this)" data-id="{{ $category->id }}" data-nama="{{ $category->nama }}">Edit</button>
-                            <button class="btn btn-sm bg-red-500 text-white" onclick="openDeleteModal(this)" data-id="{{ $category->id }}">Hapus</button>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="3" class="text-center">Tidak ada kategori tersedia.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-2xl font-bold">
+                Dashboard
+            </h2>
+            <p class="text-gray-500 mt-1">
+                Ringkasan sistem ticketing.
+            </p>
         </div>
     </div>
 
-    <!-- Add Category Modal -->
-    <dialog id="add_modal" class="modal">
-        <form method="POST" action="{{ route('categories.store') }}" class="modal-box">
-            @csrf
-            <h3 class="text-lg font-bold mb-4">Tambah Kategori</h3>
-            <div class="form-control w-full mb-4">
-                <label class="label mb-2">
-                    <span class="label-text">Nama Kategori</span>
-                </label>
-                <input type="text" placeholder="Masukkan nama kategori" class="input input-bordered w-full" name="nama" required />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card Events -->
+        <div class="card bg-base-100 shadow hover:shadow-lg transition-shadow">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-gray-500 font-medium">Total Event</h3>
+                    <div class="p-3 bg-blue-100 rounded-full text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="w-6 h-6"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5c0-1.1-.9-2-2-2m0 16H5V8h14zm0-13H5V5h14z"/></svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-gray-800 mt-2">{{ $totalEvents }}</p>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <a href="{{ route('admin.events.index') }}" class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center">
+                        Kelola Event 
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
             </div>
-            <div class="modal-action">
-                <button class="btn btn-primary" type="submit">Simpan</button>
-                <button class="btn" onclick="add_modal.close()" type="reset">Batal</button>
+        </div>
+
+        <!-- Card Kategori -->
+        <div class="card bg-base-100 shadow hover:shadow-lg transition-shadow">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-gray-500 font-medium">Total Kategori</h3>
+                    <div class="p-3 bg-purple-100 rounded-full text-purple-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="w-6 h-6"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 3a3 3 0 1 0 6 0a3 3 0 1 0-6 0"/></svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-gray-800 mt-2">{{ $totalCategories }}</p>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <a href="{{ route('categories.index') }}" class="text-sm text-purple-600 hover:text-purple-800 hover:underline flex items-center">
+                        Kelola Kategori
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
             </div>
-        </form>
-    </dialog>
+        </div>
 
-    <!-- Edit Category Modal With Retrieve ID -->
-     <dialog id="edit_modal" class="modal">
-        <form method="POST" class="modal-box">
-            @csrf
-            @method('PUT')
-
-            <input type="hidden" name="category_id" id="edit_category_id">
-
-            <h3 class="text-lg font-bold mb-4">Edit Kategori</h3>
-            <div class="form-control w-full mb-4">
-                <label class="label mb-2">
-                    <span class="label-text">Nama Kategori</span>
-                </label>
-                <input type="text" placeholder="Masukkan nama kategori" class="input input-bordered w-full" value="Kategori Contoh" id="edit_category_name" name="nama" />
+        <!-- Card Users -->
+        <div class="card bg-base-100 shadow hover:shadow-lg transition-shadow">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-gray-500 font-medium">Total Pengguna</h3>
+                    <div class="p-3 bg-green-100 rounded-full text-green-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="w-6 h-6"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                </div>
+                <p class="text-4xl font-bold text-gray-800 mt-2">{{ $totalUsers }}</p>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-sm text-green-600 flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Pengguna Terdaftar
+                    </span>
+                </div>
             </div>
-            <div class="modal-action">
-                <button class="btn btn-primary" type="submit">Simpan</button>
-                <button class="btn" onclick="edit_modal.close()" type="reset">Batal</button>
-            </div>
-        </form>
-    </dialog>
-
-    <!-- Delete Modal -->
-    <dialog id="delete_modal" class="modal">
-        <form method="POST" class="modal-box">
-            @csrf
-            @method('DELETE')
-
-            <input type="hidden" name="category_id" id="delete_category_id">
-
-            <h3 class="text-lg font-bold mb-4">Hapus Kategori</h3>
-            <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
-            <div class="modal-action">
-                <button class="btn btn-primary" type="submit">Hapus</button>
-                <button class="btn" onclick="delete_modal.close()" type="reset">Batal</button>
-            </div>
-        </form>
-    </dialog>
-
-    <script>
-        function openEditModal(button) {
-            const name = button.dataset.nama;
-            const id = button.dataset.id;
-            const form = document.querySelector('#edit_modal form');
-            
-            document.getElementById("edit_category_name").value = name;
-            document.getElementById("edit_category_id").value = id;
-
-             // Set action dengan parameter ID
-            form.action = `{{ url('/admin/categories') }}/${id}`
-
-            edit_modal.showModal();
-        }
-
-        function openDeleteModal(button) {
-            const id = button.dataset.id;
-            const form = document.querySelector('#delete_modal form');
-            document.getElementById("delete_category_id").value = id;
-
-            // Set action dengan parameter ID
-            form.action = `{{ url('/admin/categories') }}/${id}`
-
-            delete_modal.showModal();
-        }
-</script>
-
-
+        </div>
+    </div>
+</div>
 @endsection

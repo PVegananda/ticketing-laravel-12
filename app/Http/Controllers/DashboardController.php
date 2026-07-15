@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,8 +14,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $categories = Kategori::all();
+        $totalEvents = Event::count();
+        $totalCategories = Kategori::count();
+        $totalUsers = User::count();
 
-        return view('pages.admin.dashboard', compact('categories'));
+        return view('pages.admin.dashboard', compact('totalEvents', 'totalCategories', 'totalUsers'));
     }
 }
