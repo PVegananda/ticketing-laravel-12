@@ -84,16 +84,17 @@ class Event extends Model
     }
 
     public function getImageUrlAttribute()
-{
-    if (filter_var($this->gambar, FILTER_VALIDATE_URL)) {
-        return $this->gambar;
-    }
+    {
+        if (filter_var($this->gambar, FILTER_VALIDATE_URL)) {
+            return $this->gambar;
+        }
 
-    if ($this->gambar && Storage::disk('public')->exists($this->gambar)) {
-        return Storage::url($this->gambar);
-    }
+        if ($this->gambar && Storage::disk('public')->exists($this->gambar)) {
+            return Storage::url($this->gambar);
+        }
 
-    return asset('images/konser.jpg');
-}
+        // Jika tidak ada gambar, gunakan gambar dummy secara acak atau default
+        return asset('storage/edm_concert.png');
+    }
 }
 

@@ -19,22 +19,7 @@
 
                     {{-- Kolom Kiri: Gambar Event --}}
                     <div class="lg:w-1/2">
-                        @php
-                            /*
-                                Logika menentukan URL gambar:
-                                1. Jika gambar adalah URL lengkap (https://...) → pakai langsung
-                                2. Jika gambar adalah nama file → cek di storage/public/
-                                3. Jika gambar tidak ada / file tidak ditemukan → pakai default konser.jpg
-                            */
-                            if ($event->gambar && filter_var($event->gambar, FILTER_VALIDATE_URL)) {
-                                $imageUrl = $event->gambar; // URL eksternal langsung dipakai
-                            } else {
-                                $imageName = (!empty($event->gambar) && file_exists(public_path('storage/' . $event->gambar))) ? $event->gambar : 'konser.jpg';
-                                $imageUrl = asset('storage/' . $imageName); // generate URL ke storage lokal
-                            }
-                        @endphp
-
-                        <img src="{{ $imageUrl }}"
+                        <img src="{{ $event->image_url }}"
                              alt="{{ $event->judul ?? $event->nama }}"
                              class="w-full h-96 object-cover rounded-lg shadow-md">
                     </div>
