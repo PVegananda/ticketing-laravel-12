@@ -25,17 +25,15 @@
 
             {{-- Search Form --}}
             <form action="{{ route('home') }}" method="GET"
-                  style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;max-width:600px;margin:0 auto;background:rgba(0,0,0,0.35);backdrop-filter:blur(12px);padding:1rem;border-radius:2rem;border:1px solid rgba(255,255,255,0.2);">
+                  class="flex flex-col sm:flex-row gap-3 w-full max-w-2xl mx-auto bg-black/35 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl">
                 @if(request('kategori'))
                     <input type="hidden" name="kategori" value="{{ request('kategori') }}">
                 @endif
                 <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="Cari nama event konser, pameran..."
-                       class="input input-lg"
-                       style="flex:1;min-width:200px;border-radius:1rem;border:none;background:white;color:#111;">
-                <button type="submit" class="btn btn-primary btn-lg"
-                        style="border-radius:1rem;padding:0 2.5rem;font-weight:700;white-space:nowrap;">
-                    Cari
+                       class="input input-lg w-full text-gray-900 bg-white border-none shadow-inner rounded-2xl">
+                <button type="submit" class="btn btn-primary btn-lg rounded-2xl px-8 shadow-lg font-bold whitespace-nowrap w-full sm:w-auto">
+                    Cari Event
                 </button>
             </form>
 
@@ -94,9 +92,9 @@
 
 
     <section class="max-w-7xl mx-auto py-12 px-6">
-        <div class="flex justify-between items-center mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
             <h2 class="text-2xl font-black uppercase italic">Event</h2>
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2 w-full md:w-auto">
                 <a href="{{ route('home', ['search' => request('search')]) }}">
                     <x-ui.category-pill :label="'Semua'" :active="!request('kategori')" />
                 </a>
