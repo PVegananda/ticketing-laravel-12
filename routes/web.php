@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     // Route Pembelian Tiket (Checkout)
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
+
+    // Route Riwayat Pembelian Tiket
+    Route::get('/my-tickets', [App\Http\Controllers\MyTicketController::class, 'index'])->name('my-tickets.index');
 });
 
 // Route detail event publik - bisa diakses siapa saja tanpa login

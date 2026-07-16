@@ -55,6 +55,9 @@
             <a href="{{ route('dashboard') }}">Dashboard</a>
           </li>
           <li>
+            <a href="{{ route('my-tickets.index') }}">Tiket Saya</a>
+          </li>
+          <li>
             <a href="{{ route('profile.edit') }}" class="justify-between">
               Profile <span class="badge">{{ Auth::user()->name }}</span>
             </a>
