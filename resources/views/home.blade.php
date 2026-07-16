@@ -1,11 +1,11 @@
 <x-app-layout>
-    <div class="hero min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=2070&auto=format&fit=crop');">
-        <div class="hero-overlay bg-opacity-70 bg-gray-900"></div>
+    <div class="hero min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1540039155732-6761b54f2222?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="hero-overlay bg-black/60"></div>
         <div class="hero-content text-center text-white z-10">
             <div class="max-w-4xl w-full">
                 <h1 class="text-5xl font-bold drop-shadow-lg">Hi, Amankan Tiketmu yuk.</h1>
                 <p class="py-6 text-lg font-medium drop-shadow-md">
-                    BengTix: Beli tiket konser, pameran, dan festival favoritmu dengan mudah dan asik!
+                    eTicketing: Beli tiket konser, pameran, dan festival favoritmu dengan mudah dan asik!
                 </p>
                 
                 {{-- Form Pencarian Event --}}

@@ -9,7 +9,7 @@
     <p>Penyedia layanan tiket digital terpercaya.<br/>Beli tiket auto asik tanpa ribet.</p>
   </aside>
   <nav>
-    <h6 class="footer-title">BENGTIX</h6>
+    <h6 class="footer-title">eTicketing</h6>
     <a class="link link-hover">Tentang Kami</a>
     <a class="link link-hover">Syarat dan Ketentuan</a>
     <a class="link link-hover">Kebijakan Privasi</a>
