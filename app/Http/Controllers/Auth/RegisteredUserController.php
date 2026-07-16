@@ -45,8 +45,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
         
-        // Merubah route nya
-        return redirect(route('dashboard', absolute: false));
+        // Redirect ke home, bukan dashboard
+        return redirect(route('home', absolute: false));
     }
 }
 

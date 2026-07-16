@@ -38,25 +38,23 @@ Route::middleware('auth')->group(function () {
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 
-// Route dashboard admin (harus login + email terverifikasi)
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route dashboard admin (harus login + email terverifikasi + role admin/superadmin)
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified', 'role:admin,superadmin'])
+    ->name('dashboard');
 
-// Route manajemen kategori (hanya admin, prefix 'admin' artinya URL jadi /admin/categories/...)
-// name('categories.') artinya nama routenya jadi categories.index, categories.store, dll
-Route::prefix('admin')->name('categories.')->middleware(['auth', 'verified'])->group(function () {
+// Route manajemen kategori (hanya admin/superadmin, prefix 'admin' artinya URL jadi /admin/categories/...)
+Route::prefix('admin')->name('categories.')->middleware(['auth', 'verified', 'role:admin,superadmin'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('store');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 
-// Route manajemen event (hanya admin, prefix 'admin' artinya URL jadi /admin/events/...)
-// name('admin.') artinya nama routenya jadi admin.events.index, admin.events.create, dll
-// Route::resource otomatis membuat 7 route sekaligus (index, create, store, show, edit, update, destroy)
-// ->except('show') artinya route show tidak dibuat (karena show event ada di route publik di atas)
+// Route manajemen event & transaksi (hanya admin/superadmin)
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'role:admin,superadmin'])
     ->group(function () {
 
         Route::resource('events', EventController::class)
