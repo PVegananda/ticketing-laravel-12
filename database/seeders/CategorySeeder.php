@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Kategori;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -13,14 +14,20 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $kategoris = [
-            ['nama_kategori' => 'Konser'],
-            ['nama_kategori' => 'Seminar'],
-            ['nama_kategori' => 'Workshop'],
+        $categories = [
+            'Konser Musik',
+            'Pameran Seni',
+            'Festival Makanan',
+            'Seminar & Workshop',
+            'Olahraga',
+            'Teater & Drama'
         ];
 
-        foreach ($kategoris as $kategori) {
-            Kategori::create(['nama' => $kategori['nama_kategori']]);
+        foreach ($categories as $category) {
+            Kategori::firstOrCreate([
+                'nama' => $category,
+                'slug' => Str::slug($category)
+            ]);
         }
     }
 }

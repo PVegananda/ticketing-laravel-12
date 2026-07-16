@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Event;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class EventSeeder extends Seeder
 {
@@ -15,35 +16,57 @@ class EventSeeder extends Seeder
     {
         $events = [
             [
-                'user_id' => 1,
-                'judul' => 'Konser Musik Rock',
-                'deskripsi' => 'Nikmati malam penuh energi dengan band rock terkenal.',
-                'tanggal_waktu' => '2024-08-15 19:00:00',
-                'lokasi' => 'Stadion Utama',
+                'user_id' => 2, // Admin User
+                'judul' => 'Konser Musik Rock Tanah Air',
+                'deskripsi' => 'Nikmati malam penuh energi dengan band rock terkenal dari seluruh Indonesia. Tersedia berbagai stand makanan dan minuman.',
+                'tanggal_waktu' => Carbon::now()->addDays(15)->format('Y-m-d H:i:s'),
+                'lokasi' => 'Stadion Utama Gelora Bung Karno, Jakarta',
                 'kategori_id' => 1,
-                'gambar' => 'konser_rock.jpg',
+                'gambar' => 'https://images.unsplash.com/photo-1540039155733-d7f58f249d05?q=80&w=2069&auto=format&fit=crop',
             ],
             [
-                'user_id' => 1,
-                'judul' => 'Pameran Seni Kontemporer',
-                'deskripsi' => 'Jelajahi karya seni modern dari seniman lokal dan internasional.',
-                'tanggal_waktu' => '2024-09-10 10:00:00',
-                'lokasi' => 'Galeri Seni Kota',
+                'user_id' => 2,
+                'judul' => 'Pameran Seni Kontemporer 2026',
+                'deskripsi' => 'Jelajahi karya seni modern dari seniman lokal dan internasional yang akan membuka wawasan Anda tentang dunia seni digital dan fisik.',
+                'tanggal_waktu' => Carbon::now()->addDays(30)->format('Y-m-d H:i:s'),
+                'lokasi' => 'Galeri Nasional Indonesia, Jakarta',
                 'kategori_id' => 2,
-                'gambar' => 'pameran_seni.jpg',
+                'gambar' => 'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop',
             ],
             [
-                'user_id' => 1,
-                'judul' => 'Festival Makanan Internasional',
-                'deskripsi' => 'Cicipi berbagai hidangan lezat dari seluruh dunia.',
-                'tanggal_waktu' => '2024-10-05 12:00:00',
-                'lokasi' => 'Taman Kota',
+                'user_id' => 2,
+                'judul' => 'Festival Makanan Nusantara',
+                'deskripsi' => 'Cicipi berbagai hidangan lezat dan otentik dari seluruh penjuru nusantara. Dari rendang, sate, hingga jajanan pasar.',
+                'tanggal_waktu' => Carbon::now()->addDays(45)->format('Y-m-d H:i:s'),
+                'lokasi' => 'Taman Lapangan Banteng, Jakarta',
                 'kategori_id' => 3,
-                'gambar' => 'festival_makanan.jpg',
+                'gambar' => 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop',
             ],
+            [
+                'user_id' => 2,
+                'judul' => 'Tech Startup Seminar',
+                'deskripsi' => 'Pelajari cara membangun dan mendanai startup teknologi Anda langsung dari para ahli dan investor ternama.',
+                'tanggal_waktu' => Carbon::now()->addDays(7)->format('Y-m-d H:i:s'),
+                'lokasi' => 'Jakarta Convention Center (JCC)',
+                'kategori_id' => 4,
+                'gambar' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop',
+            ],
+            [
+                'user_id' => 2,
+                'judul' => 'Lari Marathon 10K',
+                'deskripsi' => 'Ikuti keseruan lari marathon akhir pekan bersama ribuan pelari lainnya dan raih medali finisher eksklusif.',
+                'tanggal_waktu' => Carbon::now()->addDays(20)->format('Y-m-d H:i:s'),
+                'lokasi' => 'Sudirman - Thamrin, Jakarta',
+                'kategori_id' => 5,
+                'gambar' => 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=2070&auto=format&fit=crop',
+            ]
         ];
+
         foreach ($events as $event) {
-            Event::create($event);
+            Event::firstOrCreate(
+                ['judul' => $event['judul']], 
+                $event
+            );
         }
     }
 }
