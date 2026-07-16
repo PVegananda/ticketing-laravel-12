@@ -63,6 +63,12 @@ Route::prefix('admin')
         // Route Manajemen Transaksi (Admin)
         Route::get('/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{id}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
+
+        // Route Manajemen User (Hanya Superadmin)
+        Route::middleware(['role:superadmin'])->group(function () {
+            Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+            Route::patch('/users/{id}/role', [App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.updateRole');
+        });
     });
 
 // Memuat file route autentikasi (login, register, logout, dll)
