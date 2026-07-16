@@ -18,7 +18,12 @@
           </svg>
         </div>
       </div>
-      <img src={{ asset("assets/images/logo_bengkod.svg") }} />
+      <a href="/" class="btn btn-ghost text-xl text-primary flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+        </svg>
+        <span class="font-bold tracking-tight">eTicketing</span>
+      </a>
     </div>
     <div class="navbar-center hidden lg:flex">
       @guest <input class="input w-72" placeholder="Cari Event..." /> @endguest
