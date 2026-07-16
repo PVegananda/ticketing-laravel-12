@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Tiket Saya')
-
-@section('content')
+<x-app-layout>
 <div class="max-w-7xl mx-auto py-12 px-6 min-h-screen">
     
     <div class="flex items-center justify-between mb-8">
@@ -98,4 +94,4 @@
     @endif
 
 </div>
-@endsection
+</x-app-layout>

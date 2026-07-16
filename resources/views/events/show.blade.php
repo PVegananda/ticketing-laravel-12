@@ -140,9 +140,21 @@
                                             Habis Terjual
                                         </button>
                                     @else
-                                        <a href="{{ route('checkout.index', ['tiket_id' => $tiket->id]) }}" class="btn btn-primary w-full">
-                                            Beli Sekarang
-                                        </a>
+                                        @auth
+                                            @if(Auth::user()->role === 'user')
+                                                <a href="{{ route('checkout.index', ['tiket_id' => $tiket->id]) }}" class="btn btn-primary w-full">
+                                                    Beli Sekarang
+                                                </a>
+                                            @else
+                                                <button class="btn btn-primary w-full btn-disabled" disabled title="Admin tidak dapat membeli tiket">
+                                                    Beli Sekarang
+                                                </button>
+                                            @endif
+                                        @else
+                                            <a href="{{ route('login') }}" class="btn btn-primary w-full">
+                                                Login untuk Beli
+                                            </a>
+                                        @endauth
                                     @endif
 
                                 </div>

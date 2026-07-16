@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="hero min-h-screen" style="background-image: url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=2070&auto=format&fit=crop');">
+    <div class="hero min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=2070&auto=format&fit=crop');">
         <div class="hero-overlay bg-opacity-70 bg-gray-900"></div>
         <div class="hero-content text-center text-white z-10">
             <div class="max-w-4xl w-full">

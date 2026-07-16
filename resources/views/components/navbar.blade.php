@@ -51,12 +51,16 @@
           tabindex="0"
           class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
         >
-            <li>
+          @if(Auth::user()->role !== 'user')
+          <li>
             <a href="{{ route('dashboard') }}">Dashboard</a>
           </li>
+          @endif
+          @if(Auth::user()->role === 'user')
           <li>
             <a href="{{ route('my-tickets.index') }}">Tiket Saya</a>
           </li>
+          @endif
           <li>
             <a href="{{ route('profile.edit') }}" class="justify-between">
               Profile <span class="badge">{{ Auth::user()->name }}</span>
