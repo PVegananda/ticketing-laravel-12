@@ -22,7 +22,7 @@ class EventSeeder extends Seeder
                 'tanggal_waktu' => Carbon::now()->addDays(15)->format('Y-m-d H:i:s'),
                 'lokasi' => 'Stadion Utama Gelora Bung Karno, Jakarta',
                 'kategori_id' => 1,
-                'gambar' => 'https://images.unsplash.com/photo-1540039155733-d7f58f249d05?q=80&w=2069&auto=format&fit=crop',
+                'gambar' => 'konser_rock.jpg',
             ],
             [
                 'user_id' => 2,
