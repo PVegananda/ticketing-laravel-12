@@ -1,177 +1,97 @@
 <x-app-layout>
-    {{-- Hero Section: Instant-load gradient + lazy image background --}}
-    <style>
-        .hero-slider {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            min-height: 560px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        /* Default instant background — no network needed */
-        .hero-bg-default {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 40%, #24243e 100%);
-            z-index: 1;
-        }
-        /* Image slides load lazily on top */
-        .hero-slide {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            z-index: 2;
-        }
-        .hero-slide.active { opacity: 1; }
-        /* Strong dark overlay for text readability */
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(0,0,0,0.6) 0%,
-                rgba(0,0,0,0.5) 50%,
-                rgba(0,0,0,0.7) 100%
-            );
-            z-index: 10;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 20;
-            text-align: center;
-            color: white;
-            width: 100%;
-            padding: 0 1.5rem;
-        }
-        .hero-title {
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.9);
-        }
-        .hero-subtitle {
-            text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 2px 12px rgba(0,0,0,0.8);
-        }
-        /* Dot indicators */
-        .hero-dots { display: flex; gap: 8px; justify-content: center; margin-top: 2rem; }
-        .hero-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        .hero-dot.active {
-            background: white;
-            width: 28px;
-            border-radius: 6px;
-        }
-    </style>
+    {{-- HERO SECTION --}}
+    <div id="heroSection" class="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
 
-    <div class="hero-slider" id="heroSlider">
-        {{-- Instant gradient base (shows immediately, no network) --}}
-        <div class="hero-bg-default"></div>
-
-        {{-- Image slides (loaded lazily) --}}
+        {{-- Background: gradient default (instant) + image slides (lazy) --}}
+        <div id="heroBg" style="position:absolute;inset:0;background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);z-index:0;"></div>
         @foreach($heroImages as $i => $img)
-        <div class="hero-slide {{ $i === 0 ? 'active' : '' }}" id="heroSlide{{ $i }}"
-             data-bg="{{ $img }}"></div>
+        <div class="hero-slide" data-bg="{{ $img }}" style="position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease-in-out;z-index:1;"></div>
         @endforeach
 
-        {{-- Overlay for text contrast --}}
-        <div class="hero-overlay"></div>
+        {{-- Dark overlay for text readability --}}
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);z-index:2;"></div>
 
-        {{-- Hero Content centered --}}
-        <div class="hero-content">
-            <p class="text-xs md:text-sm uppercase tracking-[0.35em] font-semibold mb-4 text-blue-300 hero-subtitle">
+        {{-- Content: stacked vertically, centered --}}
+        <div style="position:relative;z-index:3;width:100%;text-align:center;padding:0 1.5rem;">
+            <p style="font-size:0.7rem;letter-spacing:0.3em;font-weight:600;color:#93c5fd;margin-bottom:1rem;text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,0.8);">
                 ✦ Platform Tiket Digital Terbaik ✦
             </p>
-            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight leading-tight hero-title">
-                Hi, Amankan<br><span class="text-blue-400">Tiketmu</span> yuk.
+            <h1 style="font-size:clamp(2.5rem,7vw,5rem);font-weight:900;line-height:1.15;color:white;margin-bottom:1.25rem;text-shadow:0 2px 8px rgba(0,0,0,0.9),0 4px 24px rgba(0,0,0,0.7);">
+                Hi, Amankan<br><span style="color:#60a5fa;">Tiketmu</span> yuk.
             </h1>
-            <p class="text-base md:text-xl font-semibold mb-10 text-white max-w-xl mx-auto leading-relaxed hero-subtitle">
+            <p style="font-size:1.1rem;font-weight:500;color:rgba(255,255,255,0.9);max-width:480px;margin:0 auto 2.5rem;line-height:1.6;text-shadow:0 1px 6px rgba(0,0,0,0.9);">
                 eTicketing: Beli tiket konser, pameran, dan festival favoritmu dengan mudah dan asik!
             </p>
 
             {{-- Search Form --}}
             <form action="{{ route('home') }}" method="GET"
-                  class="flex flex-col md:flex-row gap-3 w-full max-w-2xl mx-auto bg-black/30 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl">
+                  style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;max-width:600px;margin:0 auto;background:rgba(0,0,0,0.35);backdrop-filter:blur(12px);padding:1rem;border-radius:2rem;border:1px solid rgba(255,255,255,0.2);">
                 @if(request('kategori'))
                     <input type="hidden" name="kategori" value="{{ request('kategori') }}">
                 @endif
                 <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="Cari nama event konser, pameran..."
-                       class="input input-lg w-full text-gray-900 bg-white border-none shadow-inner rounded-2xl" />
-                <button type="submit" class="btn btn-primary btn-lg rounded-2xl px-10 shadow-lg font-bold whitespace-nowrap">
-                    Cari Event
+                       class="input input-lg"
+                       style="flex:1;min-width:200px;border-radius:1rem;border:none;background:white;color:#111;">
+                <button type="submit" class="btn btn-primary btn-lg"
+                        style="border-radius:1rem;padding:0 2.5rem;font-weight:700;white-space:nowrap;">
+                    Cari
                 </button>
             </form>
 
-            {{-- Dot Indicators --}}
-            <div class="hero-dots" id="heroDots">
+            {{-- Slide dots --}}
+            <div id="heroDots" style="display:flex;gap:8px;justify-content:center;margin-top:2rem;">
                 @foreach($heroImages as $i => $img)
-                <button class="hero-dot {{ $i === 0 ? 'active' : '' }}" onclick="goToSlide({{ $i }})"></button>
+                <button onclick="goToSlide({{ $i }})"
+                        class="hero-dot-btn"
+                        id="dot{{ $i }}"
+                        style="width:{{ $i===0?'28px':'10px' }};height:10px;border-radius:10px;border:none;cursor:pointer;transition:all 0.3s;background:{{ $i===0?'white':'rgba(255,255,255,0.4)' }};"></button>
                 @endforeach
             </div>
         </div>
     </div>
 
     <script>
-    (function() {
+    (function(){
         const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.hero-dot');
-        let current = 0;
-        let timer = null;
-        let loaded = {};
+        const dots   = document.querySelectorAll('[id^="dot"]');
+        let cur = 0, timer = null, loaded = {};
 
-        // Preload image and set background
-        function loadSlide(index) {
-            if (loaded[index]) return;
-            const slide = slides[index];
-            const bg = slide.dataset.bg;
+        function loadSlide(i) {
+            if (loaded[i] || !slides[i]) return;
+            const bg = slides[i].dataset.bg;
             if (!bg) return;
             const img = new Image();
             img.onload = function() {
-                slide.style.backgroundImage = "url('" + bg + "')";
-                loaded[index] = true;
+                slides[i].style.backgroundImage = "url('"+bg+"')";
+                loaded[i] = true;
             };
             img.src = bg;
         }
 
-        function goToSlide(index) {
-            slides[current].classList.remove('active');
-            dots[current].classList.remove('active');
-            current = index;
-            loadSlide(current);
-            slides[current].classList.add('active');
-            dots[current].classList.add('active');
-            resetTimer();
-        }
-
-        function nextSlide() {
-            goToSlide((current + 1) % slides.length);
-        }
-
-        function resetTimer() {
+        window.goToSlide = function(i) {
+            if (slides[cur]) slides[cur].style.opacity = '0';
+            if (dots[cur])   { dots[cur].style.width='10px'; dots[cur].style.background='rgba(255,255,255,0.4)'; }
+            cur = i;
+            loadSlide(cur);
+            setTimeout(function(){
+                if (slides[cur]) slides[cur].style.opacity = '1';
+            }, 50);
+            if (dots[cur]) { dots[cur].style.width='28px'; dots[cur].style.background='white'; }
             if (timer) clearInterval(timer);
-            timer = setInterval(nextSlide, 5000);
-        }
+            timer = setInterval(function(){ window.goToSlide((cur+1)%slides.length); }, 5000);
+        };
 
-        // Expose to global for onclick
-        window.goToSlide = goToSlide;
-
-        // Start: load first image immediately, preload others after
+        // Init: load first image, then others lazily
         loadSlide(0);
-        resetTimer();
-        setTimeout(function() {
-            for (let i = 1; i < slides.length; i++) loadSlide(i);
-        }, 1500);
+        if (slides[0]) slides[0].style.opacity = '1';
+        timer = setInterval(function(){ window.goToSlide((cur+1)%slides.length); }, 5000);
+        setTimeout(function(){ for(let i=1;i<slides.length;i++) loadSlide(i); }, 1000);
     })();
     </script>
+
+
+
 
     <section class="max-w-7xl mx-auto py-12 px-6">
         <div class="flex justify-between items-center mb-8">
