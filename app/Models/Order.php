@@ -14,6 +14,7 @@ class Order extends Model
         'event_id',
         'order_date',
         'total_harga',
+        'status',
     ];
 
     public function user()
