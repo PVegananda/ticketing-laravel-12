@@ -133,16 +133,17 @@
                                     {{--
                                         Tombol beli:
                                         - Jika stok 0 atau null = disabled (tidak bisa diklik)
-                                        - Jika stok > 0 = aktif dan bisa diklik
+                                        - Jika stok > 0 = aktif dan mengarah ke form checkout
                                     --}}
-                                    <button class="btn btn-primary w-full {{ $tiket->stok !== null && $tiket->stok <= 0 ? 'btn-disabled' : '' }}"
-                                            {{ $tiket->stok !== null && $tiket->stok <= 0 ? 'disabled' : '' }}>
-                                        @if ($tiket->stok !== null && $tiket->stok <= 0)
+                                    @if ($tiket->stok !== null && $tiket->stok <= 0)
+                                        <button class="btn btn-primary w-full btn-disabled" disabled>
                                             Habis Terjual
-                                        @else
+                                        </button>
+                                    @else
+                                        <a href="{{ route('checkout.index', ['tiket_id' => $tiket->id]) }}" class="btn btn-primary w-full">
                                             Beli Sekarang
-                                        @endif
-                                    </button>
+                                        </a>
+                                    @endif
 
                                 </div>
                             </div>
