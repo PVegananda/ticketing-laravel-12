@@ -24,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('viewPulse', function (User $user) {
             return in_array($user->role, ['admin', 'superadmin']);
         });
+
+        Gate::define('viewLogViewer', function (User $user) {
+            return in_array($user->role, ['admin', 'superadmin']);
+        });
     }
 }

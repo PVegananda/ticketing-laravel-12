@@ -15,6 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(in_array(Auth::user()->role, ['admin', 'superadmin']))
+                    <x-nav-link href="/pulse" target="_blank">
+                        Monitoring (Pulse)
+                    </x-nav-link>
+                    <x-nav-link href="/log-viewer" target="_blank">
+                        Log Viewer
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 

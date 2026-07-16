@@ -63,6 +63,8 @@ return array(
     'ParaTest\\' => array($vendorDir . '/brianium/paratest/src'),
     'PHPUnit\\Architecture\\' => array($vendorDir . '/ta-tikoma/phpunit-architecture-test/src'),
     'PHPStan\\PhpDocParser\\' => array($vendorDir . '/phpstan/phpdoc-parser/src'),
+    'Opcodes\\MailParser\\' => array($vendorDir . '/opcodesio/mail-parser/src'),
+    'Opcodes\\LogViewer\\' => array($vendorDir . '/opcodesio/log-viewer/src'),
     'NunoMaduro\\Collision\\' => array($vendorDir . '/nunomaduro/collision/src'),
     'Nette\\' => array($vendorDir . '/nette/schema/src', $vendorDir . '/nette/utils/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
