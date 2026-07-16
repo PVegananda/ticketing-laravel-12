@@ -1,48 +1,51 @@
 <x-app-layout>
-    {{-- Hero Section dengan Slider AlpineJS --}}
-    <div x-data="{
-            activeSlide: 0,
-            slides: [
-                'https://images.unsplash.com/photo-1540039155732-6761b54f2222?q=80&w=1920&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1920&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1920&auto=format&fit=crop'
-            ],
-            init() {
-                setInterval(() => {
-                    this.activeSlide = this.activeSlide === this.slides.length - 1 ? 0 : this.activeSlide + 1;
-                }, 4000);
-            }
-        }" 
-        class="relative w-full min-h-[75vh] flex items-center justify-center overflow-hidden">
+    {{-- Hero Section dengan Slider --}}
+    <div x-data="{ activeSlide: 0, init() { setInterval(() => { this.activeSlide = (this.activeSlide + 1) % 3; }, 5000); } }" 
+         class="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden">
         
-        {{-- Background Images --}}
-        <template x-for="(slide, index) in slides" :key="index">
-            <img 
-                :src="slide" 
-                class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
-                :class="activeSlide === index ? 'opacity-100' : 'opacity-0'"
-                alt="Event Background">
-        </template>
+        {{-- Slide 1 --}}
+        <img x-show="activeSlide === 0" x-transition:enter="transition-opacity duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-1000" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            src="{{ asset('assets/images/hero1.jpg') }}" 
+            class="absolute inset-0 w-full h-full object-cover" alt="Hero 1" style="display:block;">
+
+        {{-- Slide 2 --}}
+        <img x-show="activeSlide === 1" x-transition:enter="transition-opacity duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-1000" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            src="{{ asset('assets/images/hero2.jpg') }}" 
+            class="absolute inset-0 w-full h-full object-cover" alt="Hero 2" style="display:none;">
+
+        {{-- Slide 3 --}}
+        <img x-show="activeSlide === 2" x-transition:enter="transition-opacity duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-1000" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            src="{{ asset('assets/images/hero3.jpg') }}" 
+            class="absolute inset-0 w-full h-full object-cover" alt="Hero 3" style="display:none;">
 
         {{-- Overlay Gradient --}}
-        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-base-100 z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/30 z-10"></div>
 
         {{-- Hero Content --}}
         <div class="relative z-20 text-center text-white px-6 w-full max-w-4xl">
-            <h1 class="text-5xl md:text-6xl font-black drop-shadow-2xl mb-4 tracking-tight">Hi, Amankan Tiketmu yuk.</h1>
-            <p class="text-lg md:text-xl font-medium drop-shadow-lg mb-8 text-gray-200">
+            <p class="text-sm uppercase tracking-[0.3em] font-semibold mb-3 text-primary">✦ Platform Tiket Digital Terbaik ✦</p>
+            <h1 class="text-5xl md:text-7xl font-black drop-shadow-2xl mb-6 tracking-tight leading-tight">
+                Hi, Amankan<br><span class="text-primary">Tiketmu</span> yuk.
+            </h1>
+            <p class="text-lg md:text-xl font-medium drop-shadow-lg mb-10 text-gray-300 max-w-2xl mx-auto">
                 eTicketing: Beli tiket konser, pameran, dan festival favoritmu dengan mudah dan asik!
             </p>
             
             {{-- Form Pencarian Event --}}
-            <form action="{{ route('home') }}" method="GET" class="flex flex-col md:flex-row gap-2 justify-center max-w-2xl mx-auto bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl">
+            <form action="{{ route('home') }}" method="GET" class="flex flex-col md:flex-row gap-3 justify-center max-w-2xl mx-auto bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl">
                 @if(request('kategori'))
                     <input type="hidden" name="kategori" value="{{ request('kategori') }}">
                 @endif
-                
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama event konser, pameran..." class="input input-bordered input-lg w-full text-black border-none focus:ring-2 focus:ring-primary shadow-inner rounded-2xl" />
-                <button type="submit" class="btn btn-primary btn-lg rounded-2xl px-10 shadow-lg text-lg">Cari</button>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama event konser, pameran..." class="input input-bordered input-lg w-full text-black border-none shadow-inner rounded-2xl" />
+                <button type="submit" class="btn btn-primary btn-lg rounded-2xl px-10 shadow-lg font-bold">🔍 Cari</button>
             </form>
+
+            {{-- Slide Indicators --}}
+            <div class="flex gap-2 justify-center mt-8">
+                <button @click="activeSlide = 0" :class="activeSlide === 0 ? 'w-8 bg-primary' : 'w-3 bg-white/50'" class="h-3 rounded-full transition-all duration-300"></button>
+                <button @click="activeSlide = 1" :class="activeSlide === 1 ? 'w-8 bg-primary' : 'w-3 bg-white/50'" class="h-3 rounded-full transition-all duration-300"></button>
+                <button @click="activeSlide = 2" :class="activeSlide === 2 ? 'w-8 bg-primary' : 'w-3 bg-white/50'" class="h-3 rounded-full transition-all duration-300"></button>
+            </div>
         </div>
     </div>
 
