@@ -62,6 +62,9 @@ Route::prefix('admin')
         Route::resource('events', EventController::class)
             ->except('show'); // route show sudah ada di atas (publik)
 
+        // Route Manajemen Transaksi (Admin)
+        Route::get('/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{id}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
     });
 
 // Memuat file route autentikasi (login, register, logout, dll)
