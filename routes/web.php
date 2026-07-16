@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 // Route halaman utama / homepage (bisa diakses siapa saja, tidak perlu login)
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Route Pusat Bantuan / Petunjuk Teknis (Publik)
+Route::get('/bantuan', function () {
+    return view('pages.help');
+})->name('help');
+
 // Route profile user (hanya bisa diakses jika sudah login)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

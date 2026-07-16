@@ -67,6 +67,9 @@
           </li>
           @endif
           <li>
+            <a href="{{ route('help') }}">Pusat Bantuan</a>
+          </li>
+          <li>
             <a href="{{ route('profile.edit') }}" class="justify-between">
               Profile <span class="badge">{{ Auth::user()->name }}</span>
             </a>
