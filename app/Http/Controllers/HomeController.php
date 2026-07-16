@@ -24,6 +24,11 @@ class HomeController extends Controller
             $eventsQuery->where('kategori_id', $request->kategori);
         }
 
+        // Search by event title if specified
+        if ($request->has('search') && $request->search) {
+            $eventsQuery->where('judul', 'like', '%' . $request->search . '%');
+        }
+
         // Get events with minimum ticket price
         $events = $eventsQuery->get()->map(function ($event) {
             // Add minimum ticket price to each event
