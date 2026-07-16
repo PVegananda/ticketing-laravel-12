@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('title', 'Checkout Tiket')
-
-@section('content')
+<x-app-layout>
 <div class="max-w-4xl mx-auto py-12 px-6 min-h-screen">
     
     <div class="text-center mb-8">
@@ -148,4 +144,4 @@ document.addEventListener('DOMContentLoaded', function() {
     jumlahSelect.addEventListener('change', updateTotal);
 });
 </script>
-@endsection
+</x-app-layout>
