@@ -100,7 +100,7 @@ class CheckoutController extends Controller
             $order->save();
 
             // Kurangi stok tiket setelah lunas
-            foreach ($order->details as $detail) {
+            foreach ($order->detailOrders as $detail) {
                 if ($detail->tiket && $detail->tiket->stok !== null) {
                     $detail->tiket->decrement('stok', $detail->jumlah);
                 }
