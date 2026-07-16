@@ -39,7 +39,14 @@ class HomeController extends Controller
         return view('home', [
             'categories' => $categories,
             'events' => $events,
-            'heroImages' => Event::whereNotNull('gambar')->take(3)->pluck('gambar')->values(),
+            'heroImages' => Event::whereNotNull('gambar')->take(3)->pluck('gambar')->map(function ($url) {
+                // Compress Unsplash images for faster loading
+                if (str_contains($url, 'unsplash.com')) {
+                    $url = preg_replace('/q=\d+/', 'q=30', $url);
+                    $url = preg_replace('/w=\d+/', 'w=1280', $url);
+                }
+                return $url;
+            })->values(),
         ]);
     }
 }

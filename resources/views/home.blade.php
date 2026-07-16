@@ -1,7 +1,7 @@
 <x-app-layout>
     {{-- Hero Section dengan CSS Slider --}}
     <style>
-        .hero-slider { position: relative; width: 100%; height: 92vh; overflow: hidden; }
+        .hero-slider { position: relative; width: 100%; height: 80vh; overflow: hidden; }
         .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; animation: heroFade 15s infinite; }
         @php $count = count($heroImages); @endphp
         @for($i = 0; $i < $count; $i++)
@@ -14,7 +14,7 @@
             35%  { opacity: 0; }
             100% { opacity: 0; }
         }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.65) 100%); z-index: 10; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 10; }
         .hero-content { position: relative; z-index: 20; text-align: center; color: white; padding: 0 1.5rem; }
     </style>
 
