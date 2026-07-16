@@ -25,21 +25,12 @@ class TicketSeeder extends Seeder
                     'tipe' => 'reguler',
                     'harga' => rand(50, 150) * 1000,
                     'stok' => 100,
-                    'deskripsi' => 'Akses area berdiri bebas (Festival).',
                 ],
                 [
                     'event_id' => $event->id,
-                    'tipe' => 'vip',
+                    'tipe' => 'premium',
                     'harga' => rand(200, 500) * 1000,
                     'stok' => 50,
-                    'deskripsi' => 'Akses tribun duduk dengan pemandangan lebih baik.',
-                ],
-                [
-                    'event_id' => $event->id,
-                    'tipe' => 'vvip',
-                    'harga' => rand(600, 1500) * 1000,
-                    'stok' => 10,
-                    'deskripsi' => 'Akses area eksklusif dengan meet & greet dan merchandise.',
                 ]
             ];
 

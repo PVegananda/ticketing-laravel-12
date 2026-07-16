@@ -25,8 +25,7 @@ class CategorySeeder extends Seeder
 
         foreach ($categories as $category) {
             Kategori::firstOrCreate([
-                'nama' => $category,
-                'slug' => Str::slug($category)
+                'nama' => $category
             ]);
         }
     }
