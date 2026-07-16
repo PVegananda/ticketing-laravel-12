@@ -52,13 +52,13 @@ class CheckoutController extends Controller
 
         $subtotal = $tiket->harga * $jumlah;
 
-        // 1. Buat data Order (Disimulasikan langsung lunas / paid)
+        // 1. Buat data Order (Status awalnya pending menunggu pembayaran)
         $order = Order::create([
             'user_id' => Auth::id(),
             'event_id' => $tiket->event_id,
             'order_date' => now(),
             'total_harga' => $subtotal,
-            'status' => 'paid', 
+            'status' => 'pending', 
         ]);
 
         // 2. Buat detail order (keranjang tiketnya)
@@ -69,13 +69,61 @@ class CheckoutController extends Controller
             'subtotal_harga' => $subtotal,
         ]);
 
-        // 3. Kurangi stok tiket
-        if ($tiket->stok !== null) {
-            $tiket->decrement('stok', $jumlah);
+        // 3. Redirect ke halaman QRIS
+        return redirect()->route('checkout.payment', $order->id);
+    }
+
+    /**
+     * Menampilkan halaman pembayaran QRIS dengan timer
+     */
+    public function payment($id)
+    {
+        $order = Order::where('user_id', Auth::id())->findOrFail($id);
+
+        if ($order->status !== 'pending') {
+            return redirect()->route('my-tickets.index')
+                             ->with('info', 'Pesanan ini sudah diproses sebelumnya.');
         }
 
-        // 4. Redirect ke halaman tiket saya dengan pesan sukses
+        return view('pages.checkout.payment', compact('order'));
+    }
+
+    /**
+     * Simulasi proses pembayaran sukses
+     */
+    public function processPayment(Request $request, $id)
+    {
+        $order = Order::where('user_id', Auth::id())->findOrFail($id);
+        
+        if ($order->status === 'pending') {
+            $order->status = 'paid';
+            $order->save();
+
+            // Kurangi stok tiket setelah lunas
+            foreach ($order->details as $detail) {
+                if ($detail->tiket && $detail->tiket->stok !== null) {
+                    $detail->tiket->decrement('stok', $detail->jumlah);
+                }
+            }
+        }
+
         return redirect()->route('my-tickets.index')
-                         ->with('success', 'Pembelian tiket berhasil! Pembayaran otomatis disimulasikan lunas.');
+                         ->with('success', 'Pembayaran berhasil dikonfirmasi (Simulasi QRIS).');
+    }
+
+    /**
+     * Simulasi pembayaran batal / expired
+     */
+    public function cancelPayment(Request $request, $id)
+    {
+        $order = Order::where('user_id', Auth::id())->findOrFail($id);
+        
+        if ($order->status === 'pending') {
+            $order->status = 'cancelled';
+            $order->save();
+        }
+
+        return redirect()->route('home')
+                         ->with('error', 'Waktu pembayaran habis atau dibatalkan.');
     }
 }

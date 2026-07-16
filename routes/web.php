@@ -29,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
 
+    // Route Pembayaran (QRIS Gimmick)
+    Route::get('/checkout/payment/{id}', [App\Http\Controllers\CheckoutController::class, 'payment'])->name('checkout.payment');
+    Route::post('/checkout/payment/{id}/process', [App\Http\Controllers\CheckoutController::class, 'processPayment'])->name('checkout.process');
+    Route::post('/checkout/payment/{id}/cancel', [App\Http\Controllers\CheckoutController::class, 'cancelPayment'])->name('checkout.cancel');
+
     // Route Riwayat Pembelian Tiket
     Route::get('/my-tickets', [App\Http\Controllers\MyTicketController::class, 'index'])->name('my-tickets.index');
 });
