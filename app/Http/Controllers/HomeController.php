@@ -39,6 +39,7 @@ class HomeController extends Controller
         return view('home', [
             'categories' => $categories,
             'events' => $events,
+            'heroImages' => Event::whereNotNull('gambar')->take(3)->pluck('gambar')->values(),
         ]);
     }
 }
